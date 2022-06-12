@@ -1,8 +1,9 @@
+import { Title } from 'Lib/Text';
 import React from 'react';
 
-const NotFound: React.FunctionComponent = () => {
+const NotFound: React.FunctionComponent = (): JSX.Element => {
   return (
-    <h1>Page not found</h1>
+    <Title text='Page not found !' />
   );
 };
 
