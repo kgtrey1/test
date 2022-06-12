@@ -1,4 +1,6 @@
 import { Grid } from '@mui/material';
+import { Footer } from 'Lib/Footers';
+import { SimpleNavbar } from 'Lib/Navbars';
 import React from 'react';
 import './Page.scss';
 
@@ -28,15 +30,15 @@ const Page: React.FunctionComponent<IPage> = (props: IPage): JSX.Element => {
       style={style}>
       {!hideNavbar &&
         <Grid item display='grid'>
-          {/* Add navbar here */}
+          <SimpleNavbar />
         </Grid>
       }
-      <Grid item display='grid'>
+      <Grid item xs display='grid'>
         {children}
       </Grid>
       {!hideFooter &&
         <Grid item display='grid'>
-          {/* Add footer here */}
+          <Footer />
         </Grid>
       }
     </Grid>
