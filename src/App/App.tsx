@@ -1,9 +1,16 @@
+import { Home, NotFound } from 'Pages';
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-function App() {
+const App: React.FunctionComponent = () => {
   return (
-    <>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route
+        path="*"
+        element={<NotFound />}
+      />
+    </Routes>
   );
 }
 
