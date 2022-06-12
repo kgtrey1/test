@@ -13,9 +13,9 @@ const Description: React.FunctionComponent<IDescription> = (props: IDescription)
   } = props;
 
   return (
-    <span className={className}>
+    <h2 className={className}>
       {text}
-    </span>
+    </h2>
   );
 }
 
