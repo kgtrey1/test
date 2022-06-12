@@ -1,7 +1,4 @@
-import MobileNavbar from "./MobileNavbar/MobileNavbar";
-import SimpleNavbar from "./SimpleNavbar/SimpleNavbar";
+import MobileNavbar from './MobileNavbar/MobileNavbar'
+import SimpleNavbar from './SimpleNavbar/SimpleNavbar'
 
-export {
-  MobileNavbar,
-  SimpleNavbar,
-};
+export { MobileNavbar, SimpleNavbar }

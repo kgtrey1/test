@@ -1,28 +1,25 @@
-import React from 'react';
-import './Title.scss';
+import React from 'react'
+import './Title.scss'
 
 interface ITitle {
-  text: string,
-  className?: string,
-  style?: React.CSSProperties,
+    text: string
+    className?: string
+    style?: React.CSSProperties
 }
 
 const Title: React.FunctionComponent<ITitle> = (props: ITitle): JSX.Element => {
-  const {
-    className,
-    text,
-    style,
-  } = props;
+    const { className, text, style } = props
 
-  return (
-    <h1 className={className} style={style}>
-      {text}
-    </h1>
-  );
+    return (
+        <h1 className={className} style={style}>
+            {text}
+        </h1>
+    )
 }
 
 Title.defaultProps = {
-  className: 'text-title',
+    className: 'text-title',
+    style: undefined,
 }
 
-export default Title;
+export default Title

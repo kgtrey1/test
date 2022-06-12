@@ -1,27 +1,27 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from 'Interfaces/IUser';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { IUser } from 'Interfaces/IUser'
 
 interface IUserState {
-  user?: IUser,
-  isLoading: boolean,
+    user?: IUser
+    isLoading: boolean
 }
 
 export const userSlice = createSlice({
-  name: 'user',
-  initialState: {
-    user: undefined,
-    isLoading: true,
-  } as IUserState,
-  reducers: {
-    updateUser: (state, action: PayloadAction<IUser>) => {
-      state.user = action.payload;
+    name: 'user',
+    initialState: {
+        user: undefined,
+        isLoading: true,
+    } as IUserState,
+    reducers: {
+        updateUser: (state: IUserState, action: PayloadAction<IUser>) => {
+            state.user = action.payload
+        },
+        setIsLoading: (state: IUserState, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload
+        },
     },
-    setIsLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
-  }
 })
 
-export const { updateUser } = userSlice.actions;
+export const { updateUser } = userSlice.actions
 
-export default userSlice.reducer;
+export default userSlice.reducer

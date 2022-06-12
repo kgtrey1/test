@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export interface NetworkError {
     message?: string
-    data?: any
+    data?: unknown
     status?: number
 }
 
@@ -15,14 +15,14 @@ const instance = axios.create({
     timeout: 3000,
 })
 
-const handleError = ({message, data, status}: NetworkError) => {
+const handleError = ({ message, data, status }: NetworkError) => {
     return Promise.reject({ message, data, status })
 }
 
 instance.interceptors.response.use(
-    response => response,
-    ({message, response: {data, status} }) => {
-        return handleError({message, data, status})
+    (response) => response,
+    ({ message, response: { data, status } }) => {
+        return handleError({ message, data, status })
     },
 )
 
