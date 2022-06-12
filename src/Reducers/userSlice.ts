@@ -1,12 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getEmptyUser, IUser } from 'Interfaces/IUser';
+import { IUser } from 'Interfaces/IUser';
+
+interface IUserState {
+  user?: IUser,
+  isLoading: boolean,
+}
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user: getEmptyUser() as IUser,
+    user: undefined,
     isLoading: true,
-  },
+  } as IUserState,
   reducers: {
     updateUser: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
