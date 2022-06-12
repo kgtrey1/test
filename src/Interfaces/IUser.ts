@@ -1,7 +1,11 @@
-interface IUser {
+export interface IUser {
   username: string,
   email: string,
   bio: string,
 }
 
-export default IUser;
+export const getEmptyUser = (): IUser => ({
+  username: '',
+  email: '',
+  bio: '',
+});
