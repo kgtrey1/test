@@ -7,13 +7,22 @@ const setupMocks = (api: AxiosInstance) => {
         onNoMatch: 'passthrough',
     })
 
-    mocker.onGet('login').reply(function (config) {
-        console.log(config)
+    mocker.onPost('login').reply(function (config) {
+        const payload = JSON.parse(config.data)
+
+        if (payload.email === 'kevin.gouyet@epitech.eu') {
+            return [
+                200,
+                {
+                    token: 'This should be unreadable',
+                    refreshToken: 'This should also be unreadable',
+                },
+            ]
+        }
         return [
-            200,
+            403,
             {
-                token: 'This should be unreadable',
-                refreshToken: 'This should also be unreadable',
+                message: 'Wrong credentials',
             },
         ]
     })
