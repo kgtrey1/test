@@ -5,7 +5,7 @@ import React from 'react'
 import './Page.scss'
 
 interface IPage {
-    children: JSX.Element
+    children: React.ReactNode
     hideNavbar?: boolean
     hideFooter?: boolean
     className?: string
