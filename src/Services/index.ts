@@ -1,4 +1,5 @@
 import axios from 'axios'
+import setupMocks from 'Config/Mocks'
 
 export interface NetworkError {
     message?: string
@@ -7,7 +8,7 @@ export interface NetworkError {
 }
 
 const instance = axios.create({
-    baseURL: '',
+    baseURL: 'localhost:8080',
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -15,7 +16,13 @@ const instance = axios.create({
     timeout: 3000,
 })
 
-const handleError = ({ message, data, status }: NetworkError) => {
+setupMocks(instance)
+
+const handleError = ({
+    message,
+    data,
+    status,
+}: NetworkError): Promise<NetworkError> => {
     return Promise.reject({ message, data, status })
 }
 
