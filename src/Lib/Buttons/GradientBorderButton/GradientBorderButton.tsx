@@ -6,15 +6,16 @@ interface IGradientBorderButton
     text: string
     className?: string
     style?: React.CSSProperties
+    onClick: () => void
 }
 
 const GradientBorderButton: React.FunctionComponent<IGradientBorderButton> = (
     props: IGradientBorderButton,
 ): JSX.Element => {
-    const { className, style, text } = props
+    const { className, style, text, onClick } = props
 
     return (
-        <button style={style} className={className}>
+        <button style={style} className={className} onClick={onClick}>
             {text}
         </button>
     )
