@@ -1,0 +1,19 @@
+.basic-input {
+  background: rgba(11, 26, 78, 0.85);
+  border: none;
+  border-radius: 3px;
+  padding: 18px 14px 18px 14px;
+  color: #FFFFFF;
+  font-size: 17px;
+  font-family: Roboto-Regular;
+}
+
+.basic-input::placeholder {
+  color: rgba(255, 255, 255, 0.22);
+  font-size: 17px;
+  font-family: Roboto-Regular;
+}
+
+.basic-input:focus {
+  outline: none;
+}

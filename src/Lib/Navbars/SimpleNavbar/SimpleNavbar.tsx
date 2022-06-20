@@ -1,6 +1,9 @@
 import { Grid } from '@mui/material'
 import React from 'react'
 import './SimpleNavbar.scss'
+import EriseLogo from './EriseLogo'
+import NavigationButtons from './NavigationButtons'
+import StartAndLoginButtons from './StartAndLoginButtons'
 
 interface ISimpleNavbar {
     className?: string
@@ -17,8 +20,19 @@ const SimpleNavbar: React.FunctionComponent<ISimpleNavbar> = (
             container
             direction='row'
             wrap='nowrap'
+            spacing='80px'
             className={className}
-            style={style}></Grid>
+            style={style}>
+            <Grid item display='grid'>
+                <EriseLogo />
+            </Grid>
+            <Grid item display='grid'>
+                <NavigationButtons />
+            </Grid>
+            <Grid item display='grid'>
+                <StartAndLoginButtons />
+            </Grid>
+        </Grid>
     )
 }
 
