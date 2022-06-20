@@ -1,3 +1,8 @@
 body {
   margin: 0;
 }
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: local('Roboto-Regular'), url("./Assets/fonts/Roboto-Regular.ttf") format('truetype');
+}
