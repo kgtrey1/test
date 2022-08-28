@@ -1,7 +1,8 @@
 import React from 'react'
 import './BasicInput.scss'
 
-interface IBasicInput extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface IBasicInput
+    extends React.InputHTMLAttributes<HTMLInputElement> {
     className?: string
     style?: React.CSSProperties
 }

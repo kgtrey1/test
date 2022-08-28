@@ -21,6 +21,7 @@ const Home: React.FunctionComponent = (): JSX.Element => {
                     <Grid
                         container
                         direction='column'
+                        flexWrap='nowrap'
                         paddingLeft='246px'
                         paddingTop='141px'>
                         <Grid item display='grid'>
