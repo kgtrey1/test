@@ -7,35 +7,55 @@ import { Text } from 'Lib/Texts'
 
 const Games: React.FunctionComponent = (): JSX.Element => {
     const [searchText, setSearchText] = React.useState('')
-    const gameList: IGameCard[] = [
-        {
-            tags: ['FPS', '1V1', '2V2'],
-            name: 'Rocket League',
-            image: 'https://www.journaldugeek.com/content/uploads/2021/11/template-jdg-2021-11-30t111613-030.jpg',
-        },
-        {
-            tags: ['Battle Royal', 'Versus'],
-            name: 'Fortnite',
-            image: 'https://cdn2.unrealengine.com/14br-consoles-1920x1080-wlogo-1920x1080-432974386.jpg',
-        },
-        {
-            tags: ['FPS', '1V1', '2V2'],
-            name: 'Rocket League',
-            image: 'https://www.journaldugeek.com/content/uploads/2021/11/template-jdg-2021-11-30t111613-030.jpg',
-        },
-        {
-            tags: ['FPS', '1V1', '2V2'],
-            name: 'Rocket League',
-            image: 'https://www.journaldugeek.com/content/uploads/2021/11/template-jdg-2021-11-30t111613-030.jpg',
-        },
-        {
-            tags: ['Battle Royal', 'Versus'],
-            name: 'Fortnite',
-            image: 'https://cdn2.unrealengine.com/14br-consoles-1920x1080-wlogo-1920x1080-432974386.jpg',
-        },
-    ]
-    const tagsList = ['Battle Royal', 'Versus', 'FPS', '1V1', '2V2']
+    const [gameList, setGameList] = React.useState<IGameCard[]>([])
+    const [tagsList, setTagsList] = React.useState<string[]>([])
+    const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
+    const convertNameToImage = {
+        'Rocket League':
+            'https://www.journaldugeek.com/content/uploads/2021/11/template-jdg-2021-11-30t111613-030.jpg',
+        Fortnite:
+            'https://cdn2.unrealengine.com/14br-consoles-1920x1080-wlogo-1920x1080-432974386.jpg',
+    } as any
+
+    React.useEffect(() => {
+        setIsLoading(true)
+        const updateGames = async () => {
+            const res = await fetch('https://staging-api.erise.gg/games')
+            const data = await res.json()
+            const gamesTmp = []
+            const tagsListTmp: string[] = []
+            for (const dataGame of data) {
+                gamesTmp.push({
+                    name: dataGame.name,
+                    description: dataGame.description,
+                    tags: dataGame.tags,
+                    image: convertNameToImage[dataGame.name as any],
+                })
+                for (const tagTmp of dataGame.tags) {
+                    if (!tagsListTmp.includes(tagTmp)) {
+                        tagsListTmp.push(tagTmp)
+                    }
+                }
+            }
+            setIsLoading(false)
+            setTagsList(tagsListTmp)
+            setGameList(gamesTmp)
+        }
+        updateGames()
+    }, [])
+
+    if (isLoading) {
+        return (
+            <Page>
+                <Grid
+                    container
+                    direction='column'
+                    flex='nowrap'
+                    paddingBottom='100px'></Grid>
+            </Page>
+        )
+    }
     return (
         <Page>
             <Grid
