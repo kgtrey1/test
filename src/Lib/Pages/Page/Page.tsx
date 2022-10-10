@@ -3,6 +3,7 @@ import { Footer } from 'Lib/Footers'
 import { SimpleNavbar } from 'Lib/Navbars'
 import React from 'react'
 import './Page.scss'
+import backgroundImage from 'Assets/illustrations/background.png'
 
 interface IPage {
     children: JSX.Element
@@ -27,7 +28,20 @@ const Page: React.FunctionComponent<IPage> = (props: IPage): JSX.Element => {
                     <SimpleNavbar />
                 </Grid>
             )}
-            <Grid item xs display='grid'>
+            <Grid
+                item
+                xs
+                display='grid'
+                marginTop='10%'
+                marginLeft='10%'
+                marginRight='10%'
+                marginBottom='10%'
+                style={{
+                    backgroundImage: `url(${backgroundImage})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'auto 80%',
+                    backgroundPosition: 'right bottom',
+                }}>
                 {children}
             </Grid>
             {!hideFooter && (

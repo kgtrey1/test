@@ -18,25 +18,34 @@ const Home: React.FunctionComponent = (): JSX.Element => {
                 wrap='nowrap'
                 justifyContent='space-between'>
                 <Grid item display='grid'>
-                    <Grid
-                        container
-                        direction='column'
-                        flexWrap='nowrap'
-                        paddingLeft='246px'
-                        paddingTop='141px'>
-                        <Grid item display='grid'>
+                    <Grid container direction='column' flexWrap='nowrap'>
+                        <Grid item alignSelf='flex-start' display='grid'>
                             <Title
-                                style={{ fontSize: '68px' }}
+                                style={{
+                                    fontSize: '68px',
+                                    textAlign: 'center',
+                                }}
                                 text='Welcome to e-rise !'
                             />
                         </Grid>
-                        <Grid item display='grid' paddingTop='40px'>
+                        <Grid
+                            item
+                            alignSelf='flex-start'
+                            display='grid'
+                            paddingTop='40px'>
                             <Text
-                                style={{ fontSize: '30px' }}
+                                style={{
+                                    fontSize: '30px',
+                                    textAlign: 'center',
+                                }}
                                 text='Your Tournament platform'
                             />
                         </Grid>
-                        <Grid item display='grid' paddingTop='40px'>
+                        <Grid
+                            item
+                            alignSelf='flex-start'
+                            display='grid'
+                            paddingTop='40px'>
                             <Text
                                 style={{ fontSize: '19px' }}
                                 text='Want to know more about erise ?'
@@ -46,13 +55,6 @@ const Home: React.FunctionComponent = (): JSX.Element => {
                             <GradientBackgroundButton text='Click here' />
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid
-                    item
-                    display='grid'
-                    marginTop='300px'
-                    paddingBottom='100px'>
-                    <BackgroundImage />
                 </Grid>
             </Grid>
         </Page>
