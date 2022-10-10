@@ -37,9 +37,9 @@ const Page: React.FunctionComponent<IPage> = (props: IPage): JSX.Element => {
                 marginRight='10%'
                 marginBottom='10%'
                 style={{
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'auto 80%',
+                    //backgroundImage: `url(${backgroundImage})`,
+                    //backgroundRepeat: 'no-repeat',
+                    //backgroundSize: 'auto 80%',
                     backgroundPosition: 'right bottom',
                 }}>
                 {children}

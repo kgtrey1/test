@@ -48,11 +48,7 @@ const Games: React.FunctionComponent = (): JSX.Element => {
     if (isLoading) {
         return (
             <Page>
-                <Grid
-                    container
-                    direction='column'
-                    flex='nowrap'
-                    paddingBottom='100px'></Grid>
+                <Grid container direction='column' flex='nowrap'></Grid>
             </Page>
         )
     }
