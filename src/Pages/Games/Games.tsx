@@ -6,6 +6,7 @@ import GameCard, { IGameCard } from './GameCard'
 import { Text } from 'Lib/Texts'
 
 const Games: React.FunctionComponent = (): JSX.Element => {
+    const [descriptionList, setDescriptionList] = React.useState<string[]>([])
     const [searchText, setSearchText] = React.useState('')
     const [gameList, setGameList] = React.useState<IGameCard[]>([])
     const [tagsList, setTagsList] = React.useState<string[]>([])
@@ -31,6 +32,7 @@ const Games: React.FunctionComponent = (): JSX.Element => {
                     description: dataGame.description,
                     tags: dataGame.tags,
                     image: convertNameToImage[dataGame.name as any],
+                    _id: dataGame._id,
                 })
                 for (const tagTmp of dataGame.tags) {
                     if (!tagsListTmp.includes(tagTmp)) {
@@ -93,7 +95,15 @@ const Games: React.FunctionComponent = (): JSX.Element => {
                                   .map((game, index) => {
                                       return (
                                           <Grid item key={index} display='grid'>
-                                              <GameCard {...game} />
+                                              <GameCard
+                                                  game={game}
+                                                  descriptionList={
+                                                      descriptionList
+                                                  }
+                                                  setDescriptionList={
+                                                      setDescriptionList
+                                                  }
+                                              />
                                           </Grid>
                                       )
                                   })
@@ -144,7 +154,15 @@ const Games: React.FunctionComponent = (): JSX.Element => {
                                                                           }
                                                                           display='grid'>
                                                                           <GameCard
-                                                                              {...game}
+                                                                              descriptionList={
+                                                                                  descriptionList
+                                                                              }
+                                                                              setDescriptionList={
+                                                                                  setDescriptionList
+                                                                              }
+                                                                              game={
+                                                                                  game
+                                                                              }
                                                                           />
                                                                       </Grid>
                                                                   )
