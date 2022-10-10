@@ -38,19 +38,14 @@ const Games: React.FunctionComponent = (): JSX.Element => {
 
     return (
         <Page>
-            <Grid
-                container
-                direction='column'
-                flex='nowrap'
-                paddingBottom='100px'>
+            <Grid container direction='column' flex='nowrap'>
                 <Grid item display='grid'>
                     <Grid
                         container
                         direction='row'
                         justifySelf='center'
                         maxWidth='800px'
-                        justifyContent='center'
-                        paddingTop='125px'>
+                        justifyContent='center'>
                         <Grid item display='grid' xs={8}>
                             <InputWithIcons
                                 basicInputProps={{
