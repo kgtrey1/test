@@ -1,10 +1,9 @@
 import React from 'react'
 import { Box, Grid, Modal, Alert, Snackbar, Typography } from '@mui/material'
-import './LoginModal.scss'
 import { BasicInput } from 'Lib/Inputs'
 import { GradientBorderButton } from 'Lib/Buttons'
 import { useAppDispatch, useAppSelector } from 'Hooks'
-import { login } from 'Reducers/authSlice'
+import { register } from 'Reducers/authSlice'
 import useReduceEffect from 'Hooks/useReduceEffect'
 
 interface Props {
@@ -12,12 +11,15 @@ interface Props {
     onClose: () => void
 }
 
-const LoginModal = ({ open, onClose }: Props): JSX.Element => {
+const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const dispatch = useAppDispatch()
     const { isLoading, error, success } = useAppSelector((app) => app.auth)
 
     const [email, setEmail] = React.useState<string>('')
     const [password, setPassword] = React.useState<string>('')
+    const [username, setUsername] = React.useState<string>('')
+    const [firstname, setFirstname] = React.useState<string>('')
+    const [lastname, setLastname] = React.useState<string>('')
     const [isError, setIsError] = React.useState<boolean>(false)
     const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
 
@@ -38,7 +40,15 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
     )
 
     const handleSubmit = (): void => {
-        dispatch(login({ email: email, password: password }))
+        dispatch(
+            register({
+                mail: email,
+                password: password,
+                username: username,
+                firstname: firstname,
+                lastname: lastname,
+            }),
+        )
     }
 
     return (
@@ -55,24 +65,44 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
                             <Typography
                                 color='white'
                                 fontSize='19px'
-                                fontFamily='Roboto-Regular'>
-                                Login
+                                fontFamily='Roboto-Regular'
+                                style={{ marginBlock: 10 }}>
+                                Register
                             </Typography>
                             <BasicInput
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder={'Mail address'}
-                                style={{ marginBlock: 45 }}
+                                style={{ marginBlock: 10 }}
                             />
                             <BasicInput
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder={'Password'}
                                 type={'password'}
+                                style={{ marginBlock: 10 }}
+                            />
+                            <BasicInput
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder={'Username'}
+                                style={{ marginBlock: 10 }}
+                            />
+                            <BasicInput
+                                value={firstname}
+                                onChange={(e) => setFirstname(e.target.value)}
+                                placeholder={'Firstname'}
+                                style={{ marginBlock: 10 }}
+                            />
+                            <BasicInput
+                                value={lastname}
+                                onChange={(e) => setLastname(e.target.value)}
+                                placeholder={'Lastname'}
+                                style={{ marginBlock: 10 }}
                             />
                             <GradientBorderButton
-                                text='Login'
-                                style={{ marginTop: 45 }}
+                                text='Register'
+                                style={{ marginTop: 25 }}
                                 onClick={handleSubmit}
                                 disabled={isLoading}></GradientBorderButton>
                         </Grid>
@@ -89,10 +119,10 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
                 open={isSuccess}
                 autoHideDuration={3000}
                 onClose={() => setIsSuccess(false)}>
-                <Alert severity='success'>{'You have been logged in'}</Alert>
+                <Alert severity='success'>{'Account created!'}</Alert>
             </Snackbar>
         </Grid>
     )
 }
 
-export default LoginModal
+export default RegisterModal
