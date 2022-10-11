@@ -19,7 +19,7 @@ const UserProfileSections: React.FC = (): JSX.Element => {
                     style={{
                         color: getTextColor('/userProfile'),
                     }}
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/userProfile')}
                     text='Settings'
                     Icon={<></>}
                 />
