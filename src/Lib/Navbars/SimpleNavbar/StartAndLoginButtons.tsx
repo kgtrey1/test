@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { GradientBackgroundButton, GradientBorderButton } from 'Lib/Buttons'
+import { GradientBorderButton } from 'Lib/Buttons'
 import React from 'react'
 import { LoginModal } from 'Lib/LoginModal'
 import { RegisterModal } from 'Lib/RegisterModal'
