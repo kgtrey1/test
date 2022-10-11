@@ -3,7 +3,8 @@ import {
     createSlice,
     createAsyncThunk,
 } from '@reduxjs/toolkit'
-import api, { NetworkError } from 'Services'
+import axios from 'axios'
+import { NetworkError } from 'Services'
 
 interface LoginResponse {
     token: string
@@ -20,9 +21,15 @@ const login = createAsyncThunk<
         rejectValue: NetworkError
     }
 >('Auth/LOGIN', async (payload): Promise<LoginResponse> => {
-    const resp = await api.post('login', payload)
-
-    return resp.data as LoginResponse
+    const response = await axios.post(
+        'https://staging-api.erise.gg/auth/login',
+        {
+            mail: payload.email,
+            password: payload.password,
+        },
+    )
+    console.log(response.data)
+    return response.data as LoginResponse
 })
 
 interface AuthState {
@@ -30,6 +37,7 @@ interface AuthState {
     refreshToken?: string
     isLoading: boolean
     error: NetworkError | undefined
+    success: boolean
 }
 
 const initialState: AuthState = {
@@ -37,6 +45,7 @@ const initialState: AuthState = {
     refreshToken: undefined,
     isLoading: false,
     error: undefined,
+    success: false,
 }
 
 export const authSlice = createSlice({
@@ -51,10 +60,12 @@ export const authSlice = createSlice({
             state.isLoading = false
             state.token = action.payload.token
             state.refreshToken = action.payload.refreshToken
+            state.success = true
         })
         builder.addCase(login.rejected, (state, action) => {
             state.isLoading = false
             state.error = action.error
+            state.success = false
         })
     },
 })
