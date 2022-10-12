@@ -6,7 +6,7 @@ import './Page.scss'
 import backgroundImage from 'Assets/illustrations/background.png'
 
 interface IPage {
-    children: JSX.Element
+    children: React.ReactNode
     hideNavbar?: boolean
     hideFooter?: boolean
     className?: string

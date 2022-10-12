@@ -1,22 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userSlice from 'Reducers/userSlice'
-import devToolsEnhancer from 'remote-redux-devtools'
+import authSlice from 'Reducers/authSlice'
 
 export const store = configureStore({
     reducer: {
+        auth: authSlice,
         user: userSlice,
     },
-    enhancers:
-        process.env.NODE_ENV === 'development'
-            ? [
-                  devToolsEnhancer({
-                      realtime: true,
-                      name: 'ERISE ',
-                      hostname: 'localhost',
-                      port: 8000,
-                  }),
-              ]
-            : [],
+    devTools: true,
 })
 
 export type RootState = ReturnType<typeof store.getState>
