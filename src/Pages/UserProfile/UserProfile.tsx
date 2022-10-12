@@ -18,7 +18,7 @@ const UserProfile: React.FC<IUser> = (props): JSX.Element => {
     const [editSection, setEditSection] = React.useState(false)
 
     return (
-        <Page hideFooter={true} hideNavbar={true}>
+        <Page hideFooter={true} hideNavbar={false}>
             <Grid container direction='row'>
                 <Grid item xs={4} style={{ background: '#0B1946' }}>
                     <Grid
@@ -26,7 +26,7 @@ const UserProfile: React.FC<IUser> = (props): JSX.Element => {
                         direction='column'
                         alignItems='center'
                         wrap='nowrap'>
-                        <Grid item paddingRight='450px' paddingTop='55px'>
+                        <Grid item paddingTop='55px'>
                             <IconTextButton
                                 Icon={<IconBack />}
                                 text='Back'
