@@ -6,6 +6,7 @@ import { GradientBorderButton } from 'Lib/Buttons'
 import { useAppDispatch, useAppSelector } from 'Hooks'
 import { login } from 'Reducers/authSlice'
 import useReduceEffect from 'Hooks/useReduceEffect'
+import useGenericForm from 'Hooks/useGenericForm'
 
 interface Props {
     open: boolean
@@ -13,23 +14,21 @@ interface Props {
 }
 
 export const randomModalAnimation = (): string => {
-    const animations = [
-        'modal-left-anim',
-        'modal-right-anim',
-        'modal-top-anim',
-        'modal-bottom-anim',
-    ]
+    const animations = ['modal-left-anim']
     const number: number = Math.floor(Math.random() * animations.length)
 
     return animations[number]
 }
 
 const LoginModal = ({ open, onClose }: Props): JSX.Element => {
+    const genericForm = useGenericForm({
+        email: '',
+        password: '',
+    })
+
     const dispatch = useAppDispatch()
     const { isLoading, error, success } = useAppSelector((app) => app.auth)
 
-    const [email, setEmail] = React.useState<string>('')
-    const [password, setPassword] = React.useState<string>('')
     const [isError, setIsError] = React.useState<boolean>(false)
     const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
 
@@ -50,7 +49,12 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
     )
 
     const handleSubmit = (): void => {
-        dispatch(login({ email: email, password: password }))
+        dispatch(
+            login({
+                email: genericForm.fieldValues.email,
+                password: genericForm.fieldValues.password,
+            }),
+        )
     }
 
     return (
@@ -71,14 +75,24 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
                                 Login
                             </Typography>
                             <BasicInput
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={genericForm.fieldValues.email}
+                                onChange={(e) =>
+                                    genericForm.updateValue(
+                                        'email',
+                                        e.target.value,
+                                    )
+                                }
                                 placeholder={'Mail address'}
                                 style={{ marginBlock: 45 }}
                             />
                             <BasicInput
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={genericForm.fieldValues.password}
+                                onChange={(e) =>
+                                    genericForm.updateValue(
+                                        'password',
+                                        e.target.value,
+                                    )
+                                }
                                 placeholder={'Password'}
                                 type={'password'}
                             />
