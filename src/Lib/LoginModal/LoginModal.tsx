@@ -75,26 +75,18 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
                                 Login
                             </Typography>
                             <BasicInput
-                                value={genericForm.fieldValues.email}
-                                onChange={(e) =>
-                                    genericForm.updateValue(
-                                        'email',
-                                        e.target.value,
-                                    )
-                                }
                                 placeholder={'Mail address'}
                                 style={{ marginBlock: 45 }}
+                                {...genericForm.generateInputAttributes(
+                                    'email',
+                                )}
                             />
                             <BasicInput
-                                value={genericForm.fieldValues.password}
-                                onChange={(e) =>
-                                    genericForm.updateValue(
-                                        'password',
-                                        e.target.value,
-                                    )
-                                }
                                 placeholder={'Password'}
                                 type={'password'}
+                                {...genericForm.generateInputAttributes(
+                                    'password',
+                                )}
                             />
                             <GradientBorderButton
                                 text='Login'

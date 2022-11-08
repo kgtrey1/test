@@ -1,3 +1,4 @@
+import { IBasicInput } from 'Lib/Inputs/BasicInput/BasicInput'
 import React from 'react'
 
 type useGenericFormType = <FieldValuesType>(
@@ -5,6 +6,9 @@ type useGenericFormType = <FieldValuesType>(
 ) => {
     fieldValues: FieldValuesType
     updateValue: (keyToUpdate: keyof FieldValuesType, newValue: string) => void
+    generateInputAttributes: (
+        nameOfField: keyof FieldValuesType,
+    ) => Partial<IBasicInput>
 }
 
 const useGenericForm: useGenericFormType = (initFieldValues) => {
@@ -24,9 +28,19 @@ const useGenericForm: useGenericFormType = (initFieldValues) => {
         })
     }
 
+    const generateInputAttributes = (
+        nameOfField: keyof FieldValuesType,
+    ): Partial<IBasicInput> => {
+        return {
+            value: fieldValues[nameOfField] as any,
+            onChange: (e) => updateValue(nameOfField, e.target.value),
+        } as Partial<IBasicInput>
+    }
+
     return {
         fieldValues: fieldValues,
         updateValue: updateValue,
+        generateInputAttributes: generateInputAttributes,
     }
 }
 

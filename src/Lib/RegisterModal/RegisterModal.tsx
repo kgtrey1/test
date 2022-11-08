@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from 'Hooks'
 import { register } from 'Reducers/authSlice'
 import useReduceEffect from 'Hooks/useReduceEffect'
 import { randomModalAnimation } from 'Lib/LoginModal/LoginModal'
+import useGenericForm from 'Hooks/useGenericForm'
 
 interface Props {
     open: boolean
@@ -16,11 +17,14 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const dispatch = useAppDispatch()
     const { isLoading, error, success } = useAppSelector((app) => app.auth)
 
-    const [email, setEmail] = React.useState<string>('')
-    const [password, setPassword] = React.useState<string>('')
-    const [username, setUsername] = React.useState<string>('')
-    const [firstname, setFirstname] = React.useState<string>('')
-    const [lastname, setLastname] = React.useState<string>('')
+    const genericForm = useGenericForm({
+        email: '',
+        password: '',
+        username: '',
+        firstname: '',
+        lastname: '',
+    })
+
     const [isError, setIsError] = React.useState<boolean>(false)
     const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
 
@@ -43,11 +47,11 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const handleSubmit = (): void => {
         dispatch(
             register({
-                mail: email,
-                password: password,
-                username: username,
-                firstname: firstname,
-                lastname: lastname,
+                mail: genericForm.fieldValues.email,
+                password: genericForm.fieldValues.password,
+                username: genericForm.fieldValues.username,
+                firstname: genericForm.fieldValues.firstname,
+                lastname: genericForm.fieldValues.lastname,
             }),
         )
     }
@@ -71,35 +75,40 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                                 Register
                             </Typography>
                             <BasicInput
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
                                 placeholder={'Mail address'}
                                 style={{ marginBlock: 10 }}
+                                {...genericForm.generateInputAttributes(
+                                    'email',
+                                )}
                             />
                             <BasicInput
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder={'Password'}
                                 type={'password'}
                                 style={{ marginBlock: 10 }}
+                                {...genericForm.generateInputAttributes(
+                                    'password',
+                                )}
                             />
                             <BasicInput
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
                                 placeholder={'Username'}
                                 style={{ marginBlock: 10 }}
+                                {...genericForm.generateInputAttributes(
+                                    'username',
+                                )}
                             />
                             <BasicInput
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
                                 placeholder={'Firstname'}
                                 style={{ marginBlock: 10 }}
+                                {...genericForm.generateInputAttributes(
+                                    'firstname',
+                                )}
                             />
                             <BasicInput
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
                                 placeholder={'Lastname'}
                                 style={{ marginBlock: 10 }}
+                                {...genericForm.generateInputAttributes(
+                                    'lastname',
+                                )}
                             />
                             <GradientBorderButton
                                 text='Register'
