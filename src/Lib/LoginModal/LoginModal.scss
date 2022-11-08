@@ -6,3 +6,84 @@
     background-color: #0D121E;
     box-shadow: 24;
 }
+
+.modal-left-anim {
+    animation-duration: 800ms;
+    animation-name: modal-left-anim;
+}
+
+.modal-right-anim {
+    animation-duration: 800ms;
+    animation-name: modal-right-anim;
+}
+
+.modal-top-anim {
+    animation-duration: 800ms;
+    animation-name: modal-top-anim;
+}
+
+.modal-bottom-anim {
+    animation-duration: 800ms;
+    animation-name: modal-bottom-anim;
+}
+
+@keyframes modal-top-anim {
+    0% {
+        opacity: 0.95;
+        top: 100%;
+    }
+    80% {
+        opacity: 0.95;
+        top: 60%;
+    }
+    100% {
+        opacity: 1;
+        top: 50%
+    }
+}
+
+@keyframes modal-bottom-anim {
+    0% {
+        opacity: 0.95;
+        top: 0%;
+    }
+    80% {
+        opacity: 0.95;
+        top: 40%;
+    }
+    100% {
+        opacity: 1;
+        top: 50%
+    }
+}
+
+@keyframes modal-right-anim {
+    0% {
+        opacity: 0.95;
+        left: 100%;
+    }
+    80% {
+        opacity: 0.95;
+        left: 70%;
+    }
+    100% {
+        opacity: 1;
+        left: 50%
+    }
+}
+
+
+@keyframes modal-left-anim {
+    0% {
+        opacity: 0.95;
+        left: 0%;
+    }
+    80% {
+        opacity: 0.95;
+        left: 30%;
+    }
+    100% {
+        opacity: 1;
+        left: 50%
+    }
+}

@@ -14,7 +14,9 @@ const StartAndLoginButtons = (): JSX.Element => {
                 <GradientBorderButton
                     text='Get started'
                     onClick={() => {
-                        setRegisterModal(true)
+                        setTimeout(() => {
+                            setRegisterModal(true)
+                        }, 400)
                     }}
                 />
                 <RegisterModal

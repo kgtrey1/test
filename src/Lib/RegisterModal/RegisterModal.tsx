@@ -5,6 +5,7 @@ import { GradientBorderButton } from 'Lib/Buttons'
 import { useAppDispatch, useAppSelector } from 'Hooks'
 import { register } from 'Reducers/authSlice'
 import useReduceEffect from 'Hooks/useReduceEffect'
+import { randomModalAnimation } from 'Lib/LoginModal/LoginModal'
 
 interface Props {
     open: boolean
@@ -55,7 +56,7 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
         <Grid container>
             <Grid item>
                 <Modal open={open} onClose={onClose}>
-                    <Box className='modal'>
+                    <Box className={`modal ${randomModalAnimation()}`}>
                         <Grid
                             container
                             direction='column'

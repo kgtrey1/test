@@ -12,6 +12,18 @@ interface Props {
     onClose: () => void
 }
 
+export const randomModalAnimation = (): string => {
+    const animations = [
+        'modal-left-anim',
+        'modal-right-anim',
+        'modal-top-anim',
+        'modal-bottom-anim',
+    ]
+    const number: number = Math.floor(Math.random() * animations.length)
+
+    return animations[number]
+}
+
 const LoginModal = ({ open, onClose }: Props): JSX.Element => {
     const dispatch = useAppDispatch()
     const { isLoading, error, success } = useAppSelector((app) => app.auth)
@@ -45,7 +57,7 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
         <Grid container>
             <Grid item>
                 <Modal open={open} onClose={onClose}>
-                    <Box className='modal'>
+                    <Box className={`modal ${randomModalAnimation()}`}>
                         <Grid
                             container
                             direction='column'

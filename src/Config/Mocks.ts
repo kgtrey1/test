@@ -7,7 +7,7 @@ const setupMocks = (api: AxiosInstance) => {
         onNoMatch: 'passthrough',
     })
 
-    mocker.onPost('login').reply(function (config) {
+    mocker.onPost('login').reply(function (config: any) {
         const payload = JSON.parse(config.data)
 
         if (payload.email === 'kevin.gouyet@epitech.eu') {
