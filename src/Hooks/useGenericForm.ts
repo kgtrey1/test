@@ -13,8 +13,17 @@ type useGenericFormType = <FieldValuesType>(
 
 const useGenericForm: useGenericFormType = (initFieldValues) => {
     type FieldValuesType = typeof initFieldValues
+    const [inputErrorToCheck, setInputErrorToCheck] = React.useState<
+        Array<keyof FieldValuesType>
+    >([])
     const [fieldValues, setFieldValues] =
         React.useState<FieldValuesType>(initFieldValues)
+
+    const addToInputErrorToCheck = (
+        nameOfField: keyof FieldValuesType,
+    ): void => {
+        setInputErrorToCheck((state) => [...state, nameOfField])
+    }
 
     const updateValue = (
         keyToUpdate: keyof FieldValuesType,
@@ -34,6 +43,7 @@ const useGenericForm: useGenericFormType = (initFieldValues) => {
         return {
             value: fieldValues[nameOfField] as any,
             onChange: (e) => updateValue(nameOfField, e.target.value),
+            onBlur: () => addToInputErrorToCheck(nameOfField),
         } as Partial<IBasicInput>
     }
 
