@@ -20,13 +20,16 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const genericForm = useGenericForm({
         email: '',
         password: '',
+        confirmPassword: '',
         username: '',
         firstname: '',
         lastname: '',
+        dateOfBirth: '',
     })
 
     const [isError, setIsError] = React.useState<boolean>(false)
     const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
+    const [inputError, setInputError] = React.useState<boolean>(false)
 
     useReduceEffect(
         (previousValue) => {
@@ -45,6 +48,13 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     )
 
     const handleSubmit = (): void => {
+        if (
+            genericForm.fieldValues.password !==
+            genericForm.fieldValues.confirmPassword
+        ) {
+            setInputError(true)
+            return
+        }
         dispatch(
             register({
                 mail: genericForm.fieldValues.email,
@@ -90,6 +100,14 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                                 )}
                             />
                             <BasicInput
+                                placeholder={'Confirm password'}
+                                type={'password'}
+                                style={{ marginBlock: 10 }}
+                                {...genericForm.generateInputAttributes(
+                                    'confirmPassword',
+                                )}
+                            />
+                            <BasicInput
                                 placeholder={'Username'}
                                 style={{ marginBlock: 10 }}
                                 {...genericForm.generateInputAttributes(
@@ -108,6 +126,14 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                                 style={{ marginBlock: 10 }}
                                 {...genericForm.generateInputAttributes(
                                     'lastname',
+                                )}
+                            />
+                            <BasicInput
+                                placeholder={'Date of Birth'}
+                                type={'date'}
+                                style={{ marginBlock: 10, fontSize: '1.6rem' }}
+                                {...genericForm.generateInputAttributes(
+                                    'dateOfBirth',
                                 )}
                             />
                             <GradientBorderButton
@@ -130,6 +156,14 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                 autoHideDuration={3000}
                 onClose={() => setIsSuccess(false)}>
                 <Alert severity='success'>{'Account created!'}</Alert>
+            </Snackbar>
+            <Snackbar
+                open={inputError}
+                autoHideDuration={3000}
+                onClose={() => setInputError(false)}>
+                <Alert severity='error'>
+                    {'Password and confirm password are different'}
+                </Alert>
             </Snackbar>
         </Grid>
     )
