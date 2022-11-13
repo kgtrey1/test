@@ -44,6 +44,7 @@ const register = createAsyncThunk<
         username: string
         firstname: string
         lastname: string
+        dateOfBirth: Date
     },
     {
         rejectValue: NetworkError

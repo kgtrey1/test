@@ -24,7 +24,7 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
         username: '',
         firstname: '',
         lastname: '',
-        dateOfBirth: '',
+        dateOfBirth: new Date(),
     })
 
     const [isError, setIsError] = React.useState<boolean>(false)
@@ -62,6 +62,7 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                 username: genericForm.fieldValues.username,
                 firstname: genericForm.fieldValues.firstname,
                 lastname: genericForm.fieldValues.lastname,
+                dateOfBirth: genericForm.fieldValues.dateOfBirth,
             }),
         )
     }
