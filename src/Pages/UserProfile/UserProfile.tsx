@@ -59,8 +59,8 @@ const UserProfile: React.FC<IUser> = (props): JSX.Element => {
                     wrap='nowrap'>
                     <Grid item paddingLeft='50vw' paddingTop='8vh'>
                         <img
-                            width='180vw'
-                            height='70vh'
+                            width='185vw'
+                            height='65vh'
                             src={require('./../../Assets/illustrations/eriseLogo.png')}
                             alt='erise logo'
                         />
