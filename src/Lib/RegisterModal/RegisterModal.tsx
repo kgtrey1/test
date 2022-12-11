@@ -7,6 +7,7 @@ import { register } from 'Reducers/authSlice'
 import useReduceEffect from 'Hooks/useReduceEffect'
 import { randomModalAnimation } from 'Lib/LoginModal/LoginModal'
 import useGenericForm from 'Hooks/useGenericForm'
+import { snackbarActions } from 'Reducers/snackbarSlice'
 
 interface Props {
     open: boolean
@@ -25,23 +26,30 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
         lastname: '',
     })
 
-    const [isError, setIsError] = React.useState<boolean>(false)
-    const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
-
     useReduceEffect(
         (previousValue) => {
             if (previousValue === false) {
                 return
             }
             if (error !== undefined) {
-                setIsError(true)
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: error?.message,
+                        type: 'error',
+                    }),
+                )
             }
             if (success) {
-                setIsSuccess(true)
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: 'Account created !',
+                        type: 'success',
+                    }),
+                )
                 onClose()
             }
         },
-        [isLoading],
+        [isLoading, dispatch],
     )
 
     const handleSubmit = (): void => {
@@ -59,78 +67,104 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     return (
         <Grid container>
             <Grid item>
-                <Modal open={open} onClose={onClose}>
+                <Modal
+                    open={open}
+                    onClose={() => {
+                        genericForm.resetAll()
+                        onClose()
+                    }}>
                     <Box className={`modal ${randomModalAnimation()}`}>
                         <Grid
                             container
                             direction='column'
                             justifyContent='center'
                             alignItems='center'
+                            gap='20px'
                             style={{ padding: 50 }}>
-                            <Typography
-                                color='white'
-                                fontSize='19px'
-                                fontFamily='Roboto-Regular'
-                                style={{ marginBlock: 10 }}>
-                                Register
-                            </Typography>
-                            <BasicInput
-                                placeholder={'Mail address'}
-                                style={{ marginBlock: 10 }}
-                                {...genericForm.generateInputAttributes(
-                                    'email',
-                                )}
-                            />
-                            <BasicInput
-                                placeholder={'Password'}
-                                type={'password'}
-                                style={{ marginBlock: 10 }}
-                                {...genericForm.generateInputAttributes(
-                                    'password',
-                                )}
-                            />
-                            <BasicInput
-                                placeholder={'Username'}
-                                style={{ marginBlock: 10 }}
-                                {...genericForm.generateInputAttributes(
-                                    'username',
-                                )}
-                            />
-                            <BasicInput
-                                placeholder={'Firstname'}
-                                style={{ marginBlock: 10 }}
-                                {...genericForm.generateInputAttributes(
-                                    'firstname',
-                                )}
-                            />
-                            <BasicInput
-                                placeholder={'Lastname'}
-                                style={{ marginBlock: 10 }}
-                                {...genericForm.generateInputAttributes(
-                                    'lastname',
-                                )}
-                            />
-                            <GradientBorderButton
-                                text='Register'
-                                style={{ marginTop: 25 }}
-                                onClick={handleSubmit}
-                                disabled={isLoading}></GradientBorderButton>
+                            <Grid item display='grid'>
+                                <Typography
+                                    color='white'
+                                    fontSize='19px'
+                                    fontFamily='Roboto-Regular'>
+                                    Register
+                                </Typography>
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Mail address'}
+                                    {...genericForm.generateInputAttributes(
+                                        'email',
+                                        { isRequired: true, type: 'email' },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Password'}
+                                    type={'password'}
+                                    {...genericForm.generateInputAttributes(
+                                        'password',
+                                        { isRequired: true, minLength: 8 },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Username'}
+                                    {...genericForm.generateInputAttributes(
+                                        'username',
+                                        {
+                                            isRequired: true,
+                                            minLength: 3,
+                                            maxLength: 20,
+                                        },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Firstname'}
+                                    {...genericForm.generateInputAttributes(
+                                        'firstname',
+                                        {
+                                            isRequired: true,
+                                            minLength: 2,
+                                            maxLength: 20,
+                                        },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Lastname'}
+                                    {...genericForm.generateInputAttributes(
+                                        'lastname',
+                                        {
+                                            isRequired: true,
+                                            minLength: 2,
+                                            maxLength: 20,
+                                        },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <GradientBorderButton
+                                    text='Register'
+                                    style={{ marginTop: 25 }}
+                                    onClick={() =>
+                                        genericForm.submitValues(
+                                            () => handleSubmit(),
+                                            () => {
+                                                return
+                                            },
+                                        )
+                                    }
+                                    disabled={isLoading}></GradientBorderButton>
+                            </Grid>
                         </Grid>
                     </Box>
                 </Modal>
             </Grid>
-            <Snackbar
-                open={isError}
-                autoHideDuration={3000}
-                onClose={() => setIsError(false)}>
-                <Alert severity='error'>{error?.message}</Alert>
-            </Snackbar>
-            <Snackbar
-                open={isSuccess}
-                autoHideDuration={3000}
-                onClose={() => setIsSuccess(false)}>
-                <Alert severity='success'>{'Account created!'}</Alert>
-            </Snackbar>
         </Grid>
     )
 }

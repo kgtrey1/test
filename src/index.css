@@ -4,6 +4,10 @@ body {
   background-color: #0D121E;
 }
 
+.MuiAlert-icon {
+  color: #ffffff !important;
+}
+
 @font-face {
   font-family: 'Roboto-Regular';
   src: local('Roboto-Regular'), url("./Assets/fonts/roboto/Roboto-Regular.ttf") format('truetype');
