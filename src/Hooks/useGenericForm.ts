@@ -1,5 +1,6 @@
 import { IBasicInput } from 'Lib/Inputs/BasicInput/BasicInput'
 import React from 'react'
+import Validator from 'Utils/Validator'
 
 export type FieldsAttributeType = 'phone' | 'email'
 export interface OptionsFieldAttributes {
@@ -95,6 +96,16 @@ const useGenericForm: useGenericFormType = (initFieldValues) => {
                 return {
                     hasError: true,
                     errorMessage: `Please enter more than ${options.minLength} characters`,
+                }
+            } else if (options.type === 'email' && !Validator.email(value)) {
+                return {
+                    hasError: true,
+                    errorMessage: `Please enter a valid email address`,
+                }
+            } else if (options.type === 'phone' && !Validator.phone(value)) {
+                return {
+                    hasError: true,
+                    errorMessage: `Please enter a valid phone number`,
                 }
             }
         }
