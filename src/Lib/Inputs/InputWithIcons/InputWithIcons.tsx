@@ -9,12 +9,13 @@ interface IInputWithIcons {
     basicInputProps?: IBasicInput
     className?: string
     style?: React.CSSProperties
+    iconFilterDropdown?: JSX.Element
 }
 
 const InputWithIcons: React.FunctionComponent<IInputWithIcons> = (
     props: IInputWithIcons,
 ): JSX.Element => {
-    const { basicInputProps, className, style } = props
+    const { basicInputProps, className, style, iconFilterDropdown } = props
 
     return (
         <Grid
@@ -42,7 +43,7 @@ const InputWithIcons: React.FunctionComponent<IInputWithIcons> = (
                 style={{
                     cursor: 'pointer',
                 }}>
-                <IconFilter />
+                {iconFilterDropdown}
             </Grid>
         </Grid>
     )
@@ -52,6 +53,7 @@ InputWithIcons.defaultProps = {
     basicInputProps: {},
     className: 'input-with-icons',
     style: {},
+    iconFilterDropdown: undefined,
 }
 
 export default InputWithIcons

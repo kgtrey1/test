@@ -3,11 +3,16 @@ import React from 'react'
 import { Grid } from '@mui/material'
 import { InputWithIcons } from 'Lib/Inputs'
 import GameCard, { IGameCard } from './GameCard'
+import { ReactComponent as IconFilter } from 'Assets/icons/filter.svg'
 import { Text } from 'Lib/Texts'
+import { Tooltip } from '@mui/material'
 
 const Games: React.FunctionComponent = (): JSX.Element => {
     const [descriptionList, setDescriptionList] = React.useState<string[]>([])
     const [searchText, setSearchText] = React.useState('')
+    const [tagFilter, setTagFilter] = React.useState<string | undefined>(
+        undefined,
+    )
     const [gameList, setGameList] = React.useState<IGameCard[]>([])
     const [tagsList, setTagsList] = React.useState<string[]>([])
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
@@ -66,6 +71,26 @@ const Games: React.FunctionComponent = (): JSX.Element => {
                         justifyContent='center'>
                         <Grid item display='grid' xs={8}>
                             <InputWithIcons
+                                iconFilterDropdown={
+                                    <div className='dropdown'>
+                                        <button className='dropbtn'>
+                                            <IconFilter />
+                                        </button>
+                                        <div className='dropdown-content'>
+                                            {tagsList.map((tag, index) => {
+                                                return (
+                                                    <span
+                                                        onClick={() => {
+                                                            setTagFilter(tag)
+                                                        }}
+                                                        key={index}>
+                                                        {tag}
+                                                    </span>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                }
                                 basicInputProps={{
                                     value: searchText,
                                     onChange: (e) =>
@@ -107,73 +132,80 @@ const Games: React.FunctionComponent = (): JSX.Element => {
                                           </Grid>
                                       )
                                   })
-                            : tagsList.map((tag, index) => {
-                                  return (
-                                      <Grid
-                                          item
-                                          paddingLeft='20px'
-                                          paddingRight='20px'
-                                          key={index}
-                                          display='grid'>
+                            : tagsList
+                                  .filter((x) =>
+                                      !tagFilter ? true : x.includes(tagFilter),
+                                  )
+                                  .map((tag, index) => {
+                                      return (
                                           <Grid
-                                              container
-                                              direction='column'
-                                              wrap='nowrap'>
-                                              <Grid item display='grid'>
-                                                  <Text
-                                                      style={{
-                                                          fontSize: 45,
-                                                          fontFamily:
-                                                              'Roboto-Bold',
-                                                      }}
-                                                      text={tag}
-                                                  />
-                                              </Grid>
+                                              item
+                                              paddingLeft='20px'
+                                              paddingRight='20px'
+                                              key={index}
+                                              display='grid'>
                                               <Grid
-                                                  item
-                                                  display='grid'
-                                                  paddingTop='15px'>
+                                                  container
+                                                  direction='column'
+                                                  wrap='nowrap'>
+                                                  <Grid item display='grid'>
+                                                      <Text
+                                                          style={{
+                                                              fontSize: 45,
+                                                              fontFamily:
+                                                                  'Roboto-Bold',
+                                                          }}
+                                                          text={tag}
+                                                      />
+                                                  </Grid>
                                                   <Grid
-                                                      container
-                                                      direction='row'
-                                                      spacing='20px'
-                                                      wrap='wrap'>
-                                                      {gameList
-                                                          .filter((e) =>
-                                                              e.tags.includes(
-                                                                  tag,
-                                                              ),
-                                                          )
-                                                          .map(
-                                                              (game, index) => {
-                                                                  return (
-                                                                      <Grid
-                                                                          item
-                                                                          key={
-                                                                              index
-                                                                          }
-                                                                          display='grid'>
-                                                                          <GameCard
-                                                                              descriptionList={
-                                                                                  descriptionList
+                                                      item
+                                                      display='grid'
+                                                      paddingTop='15px'>
+                                                      <Grid
+                                                          container
+                                                          direction='row'
+                                                          spacing='20px'
+                                                          wrap='wrap'>
+                                                          {gameList
+                                                              .filter((e) =>
+                                                                  e.tags.includes(
+                                                                      tag,
+                                                                  ),
+                                                              )
+                                                              .map(
+                                                                  (
+                                                                      game,
+                                                                      index,
+                                                                  ) => {
+                                                                      return (
+                                                                          <Grid
+                                                                              item
+                                                                              key={
+                                                                                  index
                                                                               }
-                                                                              setDescriptionList={
-                                                                                  setDescriptionList
-                                                                              }
-                                                                              game={
-                                                                                  game
-                                                                              }
-                                                                          />
-                                                                      </Grid>
-                                                                  )
-                                                              },
-                                                          )}
+                                                                              display='grid'>
+                                                                              <GameCard
+                                                                                  descriptionList={
+                                                                                      descriptionList
+                                                                                  }
+                                                                                  setDescriptionList={
+                                                                                      setDescriptionList
+                                                                                  }
+                                                                                  game={
+                                                                                      game
+                                                                                  }
+                                                                              />
+                                                                          </Grid>
+                                                                      )
+                                                                  },
+                                                              )}
+                                                      </Grid>
                                                   </Grid>
                                               </Grid>
                                           </Grid>
-                                      </Grid>
-                                  )
-                              })}
+                                      )
+                                  })}
                     </Grid>
                 </Grid>
             </Grid>

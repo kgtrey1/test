@@ -4,19 +4,53 @@ import React from 'react'
 import { ReactComponent as DiscordIcon } from 'Assets/icons/discord.svg'
 import { ReactComponent as TwitterIcon } from 'Assets/icons/twitter.svg'
 import { ReactComponent as InstagramIcon } from 'Assets/icons/instagram.svg'
+import { Tooltip, IconButton } from '@mui/material'
 
 const FollowUs = (): JSX.Element => {
     const IconButtons = (): JSX.Element => {
         return (
             <Grid container direction='row' wrap='nowrap' spacing='36px'>
                 <Grid item display='grid'>
-                    <DiscordIcon />
+                    <Tooltip title='Discord'>
+                        <IconButton
+                            onClick={() =>
+                                window
+                                    ?.open('https://discord.gg', '_blank')
+                                    ?.focus()
+                            }>
+                            <DiscordIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Grid>
                 <Grid item display='grid'>
-                    <InstagramIcon />
+                    <Tooltip title='Instagram'>
+                        <IconButton
+                            onClick={() =>
+                                window
+                                    ?.open(
+                                        'https://instagram.com/erise_games',
+                                        '_blank',
+                                    )
+                                    ?.focus()
+                            }>
+                            <InstagramIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Grid>
                 <Grid item display='grid'>
-                    <TwitterIcon />
+                    <Tooltip title='Twitter'>
+                        <IconButton
+                            onClick={() =>
+                                window
+                                    ?.open(
+                                        'https://twitter.com/Erise_games',
+                                        '_blank',
+                                    )
+                                    ?.focus()
+                            }>
+                            <TwitterIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Grid>
             </Grid>
         )
