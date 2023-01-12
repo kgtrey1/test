@@ -6,20 +6,39 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { snackbarActions } from 'Reducers/snackbarSlice'
 
-const App: React.FunctionComponent = (): JSX.Element => {
+const useAuth = () => {
+    //const dispatch = useAppDispatch()
+    const token = useAppSelector((state) => state.auth.token)
+    React.useEffect(() => {
+        if (token) {
+            localStorage.setItem('token', token)
+        } else {
+            localStorage.removeItem('token')
+        }
+    }, [token])
+}
+
+const AppSnackbar: React.FC = () => {
     const dispatch = useAppDispatch()
     const snackbarReducer = useAppSelector((state) => state.snackbar)
 
     return (
+        <MySnackbar
+            isOpen={snackbarReducer?.isOpen}
+            message={snackbarReducer?.message}
+            duration={snackbarReducer?.duration}
+            width={snackbarReducer?.width}
+            type={snackbarReducer?.type as AlertColor}
+            onClose={() => dispatch(snackbarActions.closeSnackbar())}
+        />
+    )
+}
+
+const App: React.FunctionComponent = (): JSX.Element => {
+    useAuth()
+    return (
         <>
-            <MySnackbar
-                isOpen={snackbarReducer?.isOpen}
-                message={snackbarReducer?.message}
-                duration={snackbarReducer?.duration}
-                width={snackbarReducer?.width}
-                type={snackbarReducer?.type as AlertColor}
-                onClose={() => dispatch(snackbarActions.closeSnackbar())}
-            />
+            <AppSnackbar />
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/games' element={<Games />} />

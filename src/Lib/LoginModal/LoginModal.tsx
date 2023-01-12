@@ -23,7 +23,7 @@ export const randomModalAnimation = (): string => {
 
 const LoginModal = ({ open, onClose }: Props): JSX.Element => {
     const genericForm = useGenericForm({
-        email: '',
+        mail: '',
         password: '',
     })
 
@@ -59,7 +59,7 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
     const handleSubmit = (): void => {
         dispatch(
             login({
-                email: genericForm.fieldValues.email,
+                mail: genericForm.fieldValues.mail,
                 password: genericForm.fieldValues.password,
             }),
         )
@@ -95,7 +95,7 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
                                 <BasicInput
                                     placeholder={'Mail address'}
                                     {...genericForm.generateInputAttributes(
-                                        'email',
+                                        'mail',
                                         { isRequired: true, type: 'email' },
                                     )}
                                 />

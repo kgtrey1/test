@@ -19,7 +19,7 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const { isLoading, error, success } = useAppSelector((app) => app.auth)
 
     const genericForm = useGenericForm({
-        email: '',
+        mail: '',
         password: '',
         username: '',
         firstname: '',
@@ -55,7 +55,7 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const handleSubmit = (): void => {
         dispatch(
             register({
-                mail: genericForm.fieldValues.email,
+                mail: genericForm.fieldValues.mail,
                 password: genericForm.fieldValues.password,
                 username: genericForm.fieldValues.username,
                 firstname: genericForm.fieldValues.firstname,
@@ -93,7 +93,7 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                                 <BasicInput
                                     placeholder={'Mail address'}
                                     {...genericForm.generateInputAttributes(
-                                        'email',
+                                        'mail',
                                         { isRequired: true, type: 'email' },
                                     )}
                                 />

@@ -5,50 +5,32 @@ import {
 } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { NetworkError } from 'Services'
-
-interface LoginResponse {
-    token: string
-    refreshToken: string
-}
+import { Object } from 'erise-types'
 
 const login = createAsyncThunk<
-    LoginResponse,
-    {
-        email: string
-        password: string
-    },
+    Object.LoginReply,
+    Object.LoginBody,
     {
         rejectValue: NetworkError
     }
->('Auth/LOGIN', async (payload): Promise<LoginResponse> => {
+>('Auth/LOGIN', async (payload): Promise<Object.LoginReply> => {
     const response = await axios.post(
         'https://staging-api.erise.gg/auth/login',
         {
-            mail: payload.email,
+            mail: payload.mail,
             password: payload.password,
         },
     )
-    return response.data as LoginResponse
+    return response.data as Object.LoginReply
 })
 
-interface RegisterResponse {
-    token: string
-    refreshToken: string
-}
-
 const register = createAsyncThunk<
-    RegisterResponse,
-    {
-        mail: string
-        password: string
-        username: string
-        firstname: string
-        lastname: string
-    },
+    Object.RegisterReply,
+    Object.RegisterBody,
     {
         rejectValue: NetworkError
     }
->('Auth/REGISTER', async (payload): Promise<RegisterResponse> => {
+>('Auth/REGISTER', async (payload): Promise<Object.RegisterReply> => {
     const response = await axios.post(
         'https://staging-api.erise.gg/auth/register',
         {
@@ -59,12 +41,12 @@ const register = createAsyncThunk<
             lastname: payload.lastname,
         },
     )
-    return response.data as RegisterResponse
+    return response.data as Object.RegisterReply
 })
 
 interface AuthState {
     token?: string
-    refreshToken?: string
+    refreshToken?: string // Not supported
     isLoading: boolean
     error: NetworkError | undefined
     success: boolean
@@ -72,7 +54,7 @@ interface AuthState {
 
 const initialState: AuthState = {
     token: undefined,
-    refreshToken: undefined,
+    refreshToken: undefined, // Not supported
     isLoading: false,
     error: undefined,
     success: false,
@@ -88,9 +70,12 @@ export const authSlice = createSlice({
         })
         builder.addCase(login.fulfilled, (state, action) => {
             state.isLoading = false
-            state.token = action.payload.token
-            state.refreshToken = action.payload.refreshToken
+            state.token =
+                'authToken' in action.payload
+                    ? action.payload.authToken
+                    : undefined
             state.success = true
+            console.log(action.payload)
         })
         builder.addCase(login.rejected, (state, action) => {
             state.isLoading = false
@@ -102,8 +87,11 @@ export const authSlice = createSlice({
         })
         builder.addCase(register.fulfilled, (state, action) => {
             state.isLoading = false
-            state.token = action.payload.token
-            state.refreshToken = action.payload.refreshToken
+            state.token =
+                'authToken' in action.payload
+                    ? action.payload.authToken
+                    : undefined
+            //state.refreshToken = action.payload.refreshToken // Not supported
             state.success = true
         })
         builder.addCase(register.rejected, (state, action) => {
