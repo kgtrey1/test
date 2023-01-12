@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IUser } from 'Interfaces/IUser'
+import { Object } from 'erise-types'
 
 interface IUserState {
     user?: IUser

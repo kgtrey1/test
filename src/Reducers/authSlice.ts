@@ -45,15 +45,16 @@ const register = createAsyncThunk<
 })
 
 interface AuthState {
-    token?: string
+    token: string | undefined
     refreshToken?: string // Not supported
     isLoading: boolean
     error: NetworkError | undefined
     success: boolean
 }
 
+const tokenInStorage = localStorage.getItem('token')
 const initialState: AuthState = {
-    token: undefined,
+    token: tokenInStorage ? tokenInStorage : undefined,
     refreshToken: undefined, // Not supported
     isLoading: false,
     error: undefined,
@@ -70,34 +71,40 @@ export const authSlice = createSlice({
         })
         builder.addCase(login.fulfilled, (state, action) => {
             state.isLoading = false
-            state.token =
-                'authToken' in action.payload
-                    ? action.payload.authToken
-                    : undefined
+            if ('authToken' in action.payload) {
+                localStorage.setItem('token', action.payload.authToken)
+                state.token = action.payload.authToken
+            } else {
+                localStorage.removeItem('token')
+                state.token = undefined
+            }
             state.success = true
-            console.log(action.payload)
         })
         builder.addCase(login.rejected, (state, action) => {
             state.isLoading = false
             state.error = action.error
             state.success = false
+            localStorage.removeItem('token')
         })
         builder.addCase(register.pending, (state) => {
             state.isLoading = true
         })
         builder.addCase(register.fulfilled, (state, action) => {
             state.isLoading = false
-            state.token =
-                'authToken' in action.payload
-                    ? action.payload.authToken
-                    : undefined
-            //state.refreshToken = action.payload.refreshToken // Not supported
-            state.success = true
+            if ('authToken' in action.payload) {
+                localStorage.setItem('token', action.payload.authToken)
+                state.token = action.payload.authToken
+            } else {
+                localStorage.removeItem('token')
+                state.token = undefined
+            }
         })
         builder.addCase(register.rejected, (state, action) => {
             state.isLoading = false
             state.error = action.error
             state.success = false
+            state.token = undefined
+            localStorage.removeItem('token')
         })
     },
 })

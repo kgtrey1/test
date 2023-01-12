@@ -7,14 +7,9 @@ import { Route, Routes } from 'react-router-dom'
 import { snackbarActions } from 'Reducers/snackbarSlice'
 
 const useAuth = () => {
-    //const dispatch = useAppDispatch()
     const token = useAppSelector((state) => state.auth.token)
     React.useEffect(() => {
-        if (token) {
-            localStorage.setItem('token', token)
-        } else {
-            localStorage.removeItem('token')
-        }
+        /* Get user info and update it here, because token is added. */
     }, [token])
 }
 
