@@ -5,12 +5,13 @@ import { Games, Home, NotFound, Team, UserProfile } from 'Pages'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { snackbarActions } from 'Reducers/snackbarSlice'
+import { getUser } from 'Reducers/userSlice'
 
 const useAuth = () => {
-    const token = useAppSelector((state) => state.auth.token)
+    const dispatch = useAppDispatch()
     React.useEffect(() => {
-        /* Get user info and update it here, because token is added. */
-    }, [token])
+        dispatch(getUser())
+    }, [])
 }
 
 const AppSnackbar: React.FC = () => {
