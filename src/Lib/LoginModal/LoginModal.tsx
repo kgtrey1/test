@@ -5,9 +5,9 @@ import { BasicInput } from 'Lib/Inputs'
 import { GradientBorderButton } from 'Lib/Buttons'
 import { useAppDispatch, useAppSelector } from 'Hooks'
 import { login } from 'Reducers/authSlice'
-import useReduceEffect from 'Hooks/useReduceEffect'
 import useGenericForm from 'Hooks/useGenericForm'
 import { snackbarActions } from 'Reducers/snackbarSlice'
+import { getUser } from 'Reducers/userSlice'
 
 interface Props {
     open: boolean
@@ -28,33 +28,7 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
     })
 
     const dispatch = useAppDispatch()
-    const { isLoading, error, success } = useAppSelector((app) => app.auth)
-
-    useReduceEffect(
-        (previousValue) => {
-            if (previousValue === false) {
-                return
-            }
-            if (error !== undefined) {
-                dispatch(
-                    snackbarActions.openSnackbar({
-                        message: error?.message,
-                        type: 'error',
-                    }),
-                )
-            }
-            if (success) {
-                dispatch(
-                    snackbarActions.openSnackbar({
-                        message: 'You have been logged in',
-                        type: 'success',
-                    }),
-                )
-                onClose()
-            }
-        },
-        [isLoading, dispatch],
-    )
+    const { isLoading } = useAppSelector((app) => app.auth)
 
     const handleSubmit = (): void => {
         dispatch(
@@ -63,6 +37,26 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
                 password: genericForm.fieldValues.password,
             }),
         )
+            .unwrap()
+            .then(() => {
+                dispatch(getUser())
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: 'You have been logged in',
+                        type: 'success',
+                    }),
+                )
+                onClose()
+            })
+            .catch((err) => {
+                console.log(err)
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: err,
+                        type: 'error',
+                    }),
+                )
+            })
     }
 
     return (

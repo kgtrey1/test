@@ -8,6 +8,7 @@ import useReduceEffect from 'Hooks/useReduceEffect'
 import { randomModalAnimation } from 'Lib/LoginModal/LoginModal'
 import useGenericForm from 'Hooks/useGenericForm'
 import { snackbarActions } from 'Reducers/snackbarSlice'
+import { getUser } from 'Reducers/userSlice'
 
 interface Props {
     open: boolean
@@ -16,7 +17,7 @@ interface Props {
 
 const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const dispatch = useAppDispatch()
-    const { isLoading, error, success } = useAppSelector((app) => app.auth)
+    const { isLoading } = useAppSelector((app) => app.auth)
 
     const genericForm = useGenericForm({
         mail: '',
@@ -25,32 +26,6 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
         firstname: '',
         lastname: '',
     })
-
-    useReduceEffect(
-        (previousValue) => {
-            if (previousValue === false) {
-                return
-            }
-            if (error !== undefined) {
-                dispatch(
-                    snackbarActions.openSnackbar({
-                        message: error?.message,
-                        type: 'error',
-                    }),
-                )
-            }
-            if (success) {
-                dispatch(
-                    snackbarActions.openSnackbar({
-                        message: 'Account created !',
-                        type: 'success',
-                    }),
-                )
-                onClose()
-            }
-        },
-        [isLoading, dispatch],
-    )
 
     const handleSubmit = (): void => {
         dispatch(
@@ -62,6 +37,26 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                 lastname: genericForm.fieldValues.lastname,
             }),
         )
+            .unwrap()
+            .then(() => {
+                dispatch(getUser())
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: 'Account created !',
+                        type: 'success',
+                    }),
+                )
+                onClose()
+            })
+            .catch((err) => {
+                console.log(err)
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: err,
+                        type: 'error',
+                    }),
+                )
+            })
     }
 
     return (

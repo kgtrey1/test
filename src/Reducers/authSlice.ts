@@ -13,15 +13,19 @@ const login = createAsyncThunk<
     {
         rejectValue: NetworkError
     }
->('Auth/LOGIN', async (payload): Promise<Object.LoginReply> => {
-    const response = await axios.post(
-        'https://staging-api.erise.gg/auth/login',
-        {
-            mail: payload.mail,
-            password: payload.password,
-        },
-    )
-    return response.data as Object.LoginReply
+>('Auth/LOGIN', async (payload, thunkAPI): Promise<any> => {
+    try {
+        const response = await axios.post(
+            'https://staging-api.erise.gg/auth/login',
+            {
+                mail: payload.mail,
+                password: payload.password,
+            },
+        )
+        return thunkAPI.fulfillWithValue(response.data as Object.LoginReply)
+    } catch (err: any) {
+        return thunkAPI.rejectWithValue(err?.response?.data?.error)
+    }
 })
 
 const register = createAsyncThunk<
@@ -30,18 +34,22 @@ const register = createAsyncThunk<
     {
         rejectValue: NetworkError
     }
->('Auth/REGISTER', async (payload): Promise<Object.RegisterReply> => {
-    const response = await axios.post(
-        'https://staging-api.erise.gg/auth/register',
-        {
-            mail: payload.mail,
-            password: payload.password,
-            username: payload.username,
-            firstname: payload.firstname,
-            lastname: payload.lastname,
-        },
-    )
-    return response.data as Object.RegisterReply
+>('Auth/REGISTER', async (payload, thunkAPI): Promise<any> => {
+    try {
+        const response = await axios.post(
+            'https://staging-api.erise.gg/auth/register',
+            {
+                mail: payload.mail,
+                password: payload.password,
+                username: payload.username,
+                firstname: payload.firstname,
+                lastname: payload.lastname,
+            },
+        )
+        return thunkAPI.fulfillWithValue(response.data as Object.RegisterReply)
+    } catch (err: any) {
+        return thunkAPI.rejectWithValue(err?.response?.data?.error)
+    }
 })
 
 interface AuthState {
