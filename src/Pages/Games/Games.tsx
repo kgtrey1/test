@@ -5,7 +5,7 @@ import { InputWithIcons } from 'Lib/Inputs'
 import GameCard, { IGameCard } from './GameCard'
 import { ReactComponent as IconFilter } from 'Assets/icons/filter.svg'
 import { Text } from 'Lib/Texts'
-import { Tooltip } from '@mui/material'
+import { useAppDispatch } from 'Hooks'
 
 const Games: React.FunctionComponent = (): JSX.Element => {
     const [descriptionList, setDescriptionList] = React.useState<string[]>([])

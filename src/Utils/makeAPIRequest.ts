@@ -17,7 +17,7 @@ const getHttp = async () => {
 const makeAPIRequest = async (
     type: 'get' | 'post' | 'delete' | 'put' | 'patch',
     route: string,
-    data = null,
+    data: any = null,
 ): Promise<any> => {
     const promise = new Promise(
         (resolve: (reason: any) => void, reject: (reason: any) => void) => {

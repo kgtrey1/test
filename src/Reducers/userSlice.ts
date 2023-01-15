@@ -7,6 +7,24 @@ import { Object } from 'erise-types'
 import { NetworkError } from 'Services'
 import makeAPIRequest from 'Utils/makeAPIRequest'
 
+const updateUser = createAsyncThunk<
+    Object.User,
+    Partial<Object.User>,
+    {
+        rejectValue: NetworkError
+    }
+>(
+    '/UPDATE_USER',
+    async (payload, { rejectWithValue, fulfillWithValue }): Promise<any> => {
+        try {
+            const response = await makeAPIRequest('put', '/user', payload)
+            return fulfillWithValue(response.data)
+        } catch (err: any) {
+            return rejectWithValue(err?.response?.data?.error)
+        }
+    },
+)
+
 const getUser = createAsyncThunk('/USER', async (): Promise<Object.User> => {
     const response = await makeAPIRequest('get', '/user')
     return response.data as Object.User
@@ -44,9 +62,23 @@ export const userSlice = createSlice({
             state.error = action.error
             state.success = false
         })
+
+        builder.addCase(updateUser.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(updateUser.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.user = action.payload
+            state.success = true
+        })
+        builder.addCase(updateUser.rejected, (state, action) => {
+            state.isLoading = false
+            state.error = action.error
+            state.success = false
+        })
     },
 })
 
-export { getUser }
+export { getUser, updateUser }
 
 export default userSlice.reducer
