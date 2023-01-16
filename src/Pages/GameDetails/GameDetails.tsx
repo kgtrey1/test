@@ -31,8 +31,8 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
                 <Grid item>
                     <img
                         src={imageURL}
-                        height='200vh'
-                        width='400vw'
+                        height='240vh'
+                        width='420vw'
                         style={{ borderRadius: '18%' }}></img>
                 </Grid>
                 <Grid item marginTop='5vh'>
