@@ -36,7 +36,6 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
         newFirstname: string,
         newLastname: string,
     ) => {
-        console.log('SAVED PRESSED')
         axios
             .put(
                 'https://staging-api.erise.gg/user/63346243725d5718ce17f94d',
@@ -53,7 +52,6 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
                 },
             )
             .then(function (response) {
-                console.log(response.status)
                 if (response.status === 200) {
                     setSnackBarText('Account updated successfully!')
                     setSnackBarColor('success')
@@ -64,8 +62,9 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
                 setOpen(true)
                 return response.status
             })
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             .catch(function (error) {
-                console.log(error)
+                setSnackBarColor('error')
                 return 500
             })
     }
@@ -82,7 +81,7 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
     }
 
     return (
-        <Grid container direction='column' wrap='nowrap'>
+        <Grid container direction='column' justifyContent='start'>
             <Grid item paddingBottom='11px'>
                 <Typography
                     color='white'
@@ -92,33 +91,28 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
                     Edit my name
                 </Typography>
             </Grid>
-            <Grid>
-                <Grid
-                    item
-                    container
-                    direction='column'
-                    width={props.nameInputWidth}
-                    height={props.nameInputHeight}
-                    alignItems='start'
-                    justifyContent='center'
+            <Grid
+                item
+                width={props.nameInputWidth}
+                height={props.nameInputHeight}
+                style={{
+                    background: '#1A285B',
+                }}>
+                <input
+                    defaultValue={username}
+                    type='text'
+                    onChange={(e) => {
+                        setUsername(e.target.value)
+                    }}
                     style={{
-                        background: '#1A285B',
-                    }}>
-                    <input
-                        defaultValue={username}
-                        type='text'
-                        onChange={(e) => {
-                            setUsername(e.target.value)
-                        }}
-                        style={{
-                            background: 'transparent',
-                            border: 'none',
-                            height: props.nameInputHeight,
-                            width: props.nameInputWidth,
-                            fontSize: '23px',
-                            color: 'white',
-                        }}></input>
-                </Grid>
+                        background: 'transparent',
+                        border: 'none',
+                        outline: 'none',
+                        height: props.nameInputHeight,
+                        width: props.nameInputWidth,
+                        fontSize: '23px',
+                        color: 'white',
+                    }}></input>
             </Grid>
             <Grid item paddingBottom='14px' paddingTop='28px'>
                 <Typography
@@ -129,33 +123,30 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
                     Edit my bio
                 </Typography>
             </Grid>
-            <Grid>
-                <Grid
-                    item
-                    container
-                    direction='column'
-                    width={props.bioInputWidth}
-                    height={props.bioInputHeight}
-                    alignItems='start'
-                    justifyContent='center'
+            <Grid
+                item
+                width={props.bioInputWidth}
+                height={props.bioInputHeight}
+                style={{
+                    background: '#1A285B',
+                }}>
+                <input
+                    defaultValue={bio}
+                    type='text'
+                    onChange={(e) => {
+                        setBio(e.target.value)
+                    }}
                     style={{
-                        background: '#1A285B',
-                    }}>
-                    <input
-                        defaultValue={bio}
-                        type='text'
-                        onChange={(e) => {
-                            setBio(e.target.value)
-                        }}
-                        style={{
-                            background: 'transparent',
-                            border: 'none',
-                            height: props.bioInputHeight,
-                            width: props.bioInputWidth,
-                            fontSize: '23px',
-                            color: 'white',
-                        }}></input>
-                </Grid>
+                        background: 'transparent',
+                        border: 'none',
+                        outline: 'none',
+                        height: props.bioInputHeight,
+                        width: props.bioInputWidth,
+                        fontSize: '23px',
+                        color: 'white',
+                        fontFamily: 'Roboto-Regular',
+                        resize: 'none',
+                    }}></input>
             </Grid>
             <Grid
                 item
