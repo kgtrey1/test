@@ -1,7 +1,7 @@
 import { AlertColor } from '@mui/material'
 import { useAppDispatch, useAppSelector } from 'Hooks'
 import MySnackbar from 'Lib/Snackbars/MySnackbar'
-import MobileUPEdit from 'Lib/UserProfile/MobileUserProfile/MobileUPEdit'
+import UserProfileEdit from 'Lib/UserProfile/UserProfileEdit'
 import { Games, Home, NotFound, Team, UserProfile } from 'Pages'
 import GameDetails from 'Pages/GameDetails/GameDetails'
 import React from 'react'
@@ -43,6 +43,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
                 <Route path='/team' element={<Team />} />
                 <Route path='*' element={<NotFound />} />
                 <Route path='/userProfile' element={<UserProfile />} />
+                <Route path='/userProfile/edit' element={<UserProfileEdit />} />
                 <Route
                     path='/games/rocketleague'
                     element={
@@ -57,7 +58,6 @@ const App: React.FunctionComponent = (): JSX.Element => {
                         />
                     }
                 />
-                <Route path='/userProfile/edit' element={<MobileUPEdit />} />
             </Routes>
         </>
     )

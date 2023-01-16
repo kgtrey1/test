@@ -1,13 +1,13 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import UserProfilePicture from '../UserProfilePicture'
-import MobileUPBar from './MobileUPBar'
+import UserProfilePicture from './UserProfilePicture'
+import MobileUPBar from './MobileUserProfile/MobileUPBar'
 import EditPen from 'Assets/icons/edit_pen.svg'
-import UserProfileEditSection from '../UserProfileEditSection'
+import UserProfileEditSection from './UserProfileEditSection'
 import { useMediaQuery } from 'react-responsive'
 import SimpleUserProfile from 'Pages/UserProfile/SimpleUserProfile'
 
-const MobileUPEdit: React.FC = (): JSX.Element => {
+const UserProfileEdit: React.FC = (): JSX.Element => {
     const isMobileDevice = useMediaQuery({
         query: '(min-device-width: 480px)',
     })
@@ -44,4 +44,4 @@ const MobileUPEdit: React.FC = (): JSX.Element => {
     )
 }
 
-export default MobileUPEdit
+export default UserProfileEdit
