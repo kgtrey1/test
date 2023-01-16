@@ -4,7 +4,6 @@ import { BasicInput } from 'Lib/Inputs'
 import { GradientBorderButton } from 'Lib/Buttons'
 import { useAppDispatch, useAppSelector } from 'Hooks'
 import { register } from 'Reducers/authSlice'
-import useReduceEffect from 'Hooks/useReduceEffect'
 import { randomModalAnimation } from 'Lib/LoginModal/LoginModal'
 import useGenericForm from 'Hooks/useGenericForm'
 import { snackbarActions } from 'Reducers/snackbarSlice'
@@ -22,6 +21,7 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
     const genericForm = useGenericForm({
         mail: '',
         password: '',
+        confirmPassword: '',
         username: '',
         firstname: '',
         lastname: '',
@@ -100,6 +100,25 @@ const RegisterModal = ({ open, onClose }: Props): JSX.Element => {
                                     {...genericForm.generateInputAttributes(
                                         'password',
                                         { isRequired: true, minLength: 8 },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Confirm password'}
+                                    type={'password'}
+                                    {...genericForm.generateInputAttributes(
+                                        'confirmPassword',
+                                        {
+                                            isRequired: true,
+                                            minLength: 8,
+                                            similarity: [
+                                                genericForm.fieldValues
+                                                    .password,
+                                                genericForm.fieldValues
+                                                    .confirmPassword,
+                                            ],
+                                        },
                                     )}
                                 />
                             </Grid>
