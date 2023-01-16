@@ -4,6 +4,7 @@ import MySnackbar from 'Lib/Snackbars/MySnackbar'
 import UserProfileEdit from 'Lib/UserProfile/UserProfileEdit'
 import { Games, Home, NotFound, Team, UserProfile } from 'Pages'
 import GameDetails from 'Pages/GameDetails/GameDetails'
+import Policy from 'Pages/Policy/Policy'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { snackbarActions } from 'Reducers/snackbarSlice'
@@ -43,6 +44,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
                 <Route path='/team' element={<Team />} />
                 <Route path='*' element={<NotFound />} />
                 <Route path='/userProfile' element={<UserProfile />} />
+                <Route path='/Policy' element={<Policy />} />
                 <Route path='/userProfile/edit' element={<UserProfileEdit />} />
                 <Route
                     path='/games/rocketleague'

@@ -45,9 +45,9 @@ const UserProfileSections: React.FC<IUserProfileSections> = (
                 borderBottom='1px solid white'>
                 <IconTextButton
                     style={{
-                        color: getTextColor('/'),
+                        color: getTextColor('/Policy'),
                     }}
-                    onClick={() => navigate('#')}
+                    onClick={() => navigate('/Policy')}
                     text='Confidentiality & policy'
                     Icon={<></>}
                 />
