@@ -1,8 +1,10 @@
 import { AlertColor } from '@mui/material'
 import { useAppDispatch, useAppSelector } from 'Hooks'
 import MySnackbar from 'Lib/Snackbars/MySnackbar'
+import MobileUPEdit from 'Lib/UserProfile/MobileUserProfile/MobileUPEdit'
 import { Games, Home, NotFound, Team, UserProfile } from 'Pages'
 import GameDetails from 'Pages/GameDetails/GameDetails'
+import MobileUserProfile from 'Pages/UserProfile/MobileUserProfile'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { snackbarActions } from 'Reducers/snackbarSlice'
@@ -42,6 +44,16 @@ const App: React.FunctionComponent = (): JSX.Element => {
                 <Route path='/team' element={<Team />} />
                 <Route path='*' element={<NotFound />} />
                 <Route
+                    path='/userProfile'
+                    element={
+                        <UserProfile
+                            username='Joueur1'
+                            bio='Je suis un gamer!'
+                            email='joueur1@gaming.gg'
+                        />
+                    }
+                />
+                <Route
                     path='/games/rocketleague'
                     element={
                         <GameDetails
@@ -56,12 +68,22 @@ const App: React.FunctionComponent = (): JSX.Element => {
                     }
                 />
                 <Route
-                    path='/userProfile'
+                    path='/mobileUserProfile'
                     element={
-                        <UserProfile
-                            username='Joueur1'
-                            bio='Je suis un gamer!'
-                            email='joueur1@gaming.gg'
+                        <MobileUserProfile
+                            username={'Faez'}
+                            email={'faezdhuny786@gmail.com'}
+                            bio={'Je suis un bg'}
+                        />
+                    }
+                />
+                <Route
+                    path='/userProfile/edit'
+                    element={
+                        <MobileUPEdit
+                            username={'Faez'}
+                            email={'faezdhuny786@gmail.com'}
+                            bio={'Je suis un bg'}
                         />
                     }
                 />

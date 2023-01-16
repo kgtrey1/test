@@ -6,6 +6,13 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import axios from 'axios'
 import React from 'react'
 
+interface IUserProfileEditSection extends IUser {
+    nameInputHeight?: string
+    nameInputWidth?: string
+    bioInputHeight?: string
+    bioInputWidth?: string
+}
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref,
@@ -13,7 +20,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
 })
 
-const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
+const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
+    props,
+): JSX.Element => {
     const [open, setOpen] = React.useState(false)
     const [snackbarText, setSnackBarText] = React.useState(
         'Account updated successfully!',
@@ -80,7 +89,7 @@ const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
                     fontFamily='Roboto-Regular'
                     fontSize='19px'
                     fontWeight='bold'>
-                    Name
+                    Edit my name
                 </Typography>
             </Grid>
             <Grid>
@@ -88,8 +97,8 @@ const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
                     item
                     container
                     direction='column'
-                    width='610px'
-                    height='84px'
+                    width={props.nameInputWidth}
+                    height={props.nameInputHeight}
                     alignItems='start'
                     justifyContent='center'
                     style={{
@@ -104,8 +113,8 @@ const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
                         style={{
                             background: 'transparent',
                             border: 'none',
-                            height: '84px',
-                            width: '607px',
+                            height: props.nameInputHeight,
+                            width: props.nameInputWidth,
                             fontSize: '23px',
                             color: 'white',
                         }}></input>
@@ -117,7 +126,7 @@ const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
                     fontFamily='Roboto-Regular'
                     fontSize='19px'
                     fontWeight='bold'>
-                    Bio
+                    Edit my bio
                 </Typography>
             </Grid>
             <Grid>
@@ -125,8 +134,8 @@ const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
                     item
                     container
                     direction='column'
-                    width='610px'
-                    height='195px'
+                    width={props.bioInputWidth}
+                    height={props.bioInputHeight}
                     alignItems='start'
                     justifyContent='center'
                     style={{
@@ -141,8 +150,8 @@ const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
                         style={{
                             background: 'transparent',
                             border: 'none',
-                            height: '195px',
-                            width: '607px',
+                            height: props.bioInputHeight,
+                            width: props.bioInputWidth,
                             fontSize: '23px',
                             color: 'white',
                         }}></input>
@@ -167,6 +176,13 @@ const UserProfileEditSection: React.FC<IUser> = (): JSX.Element => {
             </Snackbar>
         </Grid>
     )
+}
+
+UserProfileEditSection.defaultProps = {
+    nameInputHeight: '84px',
+    nameInputWidth: '610px',
+    bioInputHeight: '195px',
+    bioInputWidth: '610px',
 }
 
 export default UserProfileEditSection

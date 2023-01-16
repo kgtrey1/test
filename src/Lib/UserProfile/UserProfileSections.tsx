@@ -3,7 +3,13 @@ import { IconTextButton } from 'Lib/Buttons'
 import { useLocation, useNavigate } from 'react-router-dom'
 import React from 'react'
 
-const UserProfileSections: React.FC = (): JSX.Element => {
+interface IUserProfileSections {
+    isMobile?: boolean
+}
+
+const UserProfileSections: React.FC<IUserProfileSections> = (
+    props,
+): JSX.Element => {
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -19,7 +25,11 @@ const UserProfileSections: React.FC = (): JSX.Element => {
                     style={{
                         color: getTextColor('/userProfile'),
                     }}
-                    onClick={() => navigate('/userProfile')}
+                    onClick={() => {
+                        props.isMobile
+                            ? navigate('/userProfile/edit')
+                            : navigate('/userProfile')
+                    }}
                     text='Settings'
                     Icon={<></>}
                 />
@@ -54,6 +64,10 @@ const UserProfileSections: React.FC = (): JSX.Element => {
             </Grid>
         </Grid>
     )
+}
+
+UserProfileSections.defaultProps = {
+    isMobile: false,
 }
 
 export default UserProfileSections
