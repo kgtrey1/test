@@ -5,74 +5,65 @@ import {
 } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { NetworkError } from 'Services'
-
-interface LoginResponse {
-    token: string
-    refreshToken: string
-}
+import { Object } from 'erise-types'
 
 const login = createAsyncThunk<
-    LoginResponse,
-    {
-        email: string
-        password: string
-    },
+    Object.LoginReply,
+    Object.LoginBody,
     {
         rejectValue: NetworkError
     }
->('Auth/LOGIN', async (payload): Promise<LoginResponse> => {
-    const response = await axios.post(
-        'https://staging-api.erise.gg/auth/login',
-        {
-            mail: payload.email,
-            password: payload.password,
-        },
-    )
-    return response.data as LoginResponse
+>('Auth/LOGIN', async (payload, thunkAPI): Promise<any> => {
+    try {
+        const response = await axios.post(
+            'https://staging-api.erise.gg/auth/login',
+            {
+                mail: payload.mail,
+                password: payload.password,
+            },
+        )
+        return thunkAPI.fulfillWithValue(response.data as Object.LoginReply)
+    } catch (err: any) {
+        return thunkAPI.rejectWithValue(err?.response?.data?.error)
+    }
 })
 
-interface RegisterResponse {
-    token: string
-    refreshToken: string
-}
-
 const register = createAsyncThunk<
-    RegisterResponse,
-    {
-        mail: string
-        password: string
-        username: string
-        firstname: string
-        lastname: string
-    },
+    Object.RegisterReply,
+    Object.RegisterBody,
     {
         rejectValue: NetworkError
     }
->('Auth/REGISTER', async (payload): Promise<RegisterResponse> => {
-    const response = await axios.post(
-        'https://staging-api.erise.gg/auth/register',
-        {
-            mail: payload.mail,
-            password: payload.password,
-            username: payload.username,
-            firstname: payload.firstname,
-            lastname: payload.lastname,
-        },
-    )
-    return response.data as RegisterResponse
+>('Auth/REGISTER', async (payload, thunkAPI): Promise<any> => {
+    try {
+        const response = await axios.post(
+            'https://staging-api.erise.gg/auth/register',
+            {
+                mail: payload.mail,
+                password: payload.password,
+                username: payload.username,
+                firstname: payload.firstname,
+                lastname: payload.lastname,
+            },
+        )
+        return thunkAPI.fulfillWithValue(response.data as Object.RegisterReply)
+    } catch (err: any) {
+        return thunkAPI.rejectWithValue(err?.response?.data?.error)
+    }
 })
 
 interface AuthState {
-    token?: string
-    refreshToken?: string
+    token: string | undefined
+    refreshToken?: string // Not supported
     isLoading: boolean
     error: NetworkError | undefined
     success: boolean
 }
 
+const tokenInStorage = localStorage.getItem('token')
 const initialState: AuthState = {
-    token: undefined,
-    refreshToken: undefined,
+    token: tokenInStorage ? tokenInStorage : undefined,
+    refreshToken: undefined, // Not supported
     isLoading: false,
     error: undefined,
     success: false,
@@ -88,28 +79,40 @@ export const authSlice = createSlice({
         })
         builder.addCase(login.fulfilled, (state, action) => {
             state.isLoading = false
-            state.token = action.payload.token
-            state.refreshToken = action.payload.refreshToken
+            if ('authToken' in action.payload) {
+                localStorage.setItem('token', action.payload.authToken)
+                state.token = action.payload.authToken
+            } else {
+                localStorage.removeItem('token')
+                state.token = undefined
+            }
             state.success = true
         })
         builder.addCase(login.rejected, (state, action) => {
             state.isLoading = false
             state.error = action.error
             state.success = false
+            localStorage.removeItem('token')
         })
         builder.addCase(register.pending, (state) => {
             state.isLoading = true
         })
         builder.addCase(register.fulfilled, (state, action) => {
             state.isLoading = false
-            state.token = action.payload.token
-            state.refreshToken = action.payload.refreshToken
-            state.success = true
+            if ('authToken' in action.payload) {
+                localStorage.setItem('token', action.payload.authToken)
+                state.token = action.payload.authToken
+            } else {
+                localStorage.removeItem('token')
+                state.token = undefined
+            }
         })
         builder.addCase(register.rejected, (state, action) => {
             state.isLoading = false
             state.error = action.error
             state.success = false
+            state.token = undefined
+            localStorage.removeItem('token')
         })
     },
 })

@@ -1,12 +1,13 @@
 import React from 'react'
-import { Box, Grid, Modal, Alert, Snackbar, Typography } from '@mui/material'
+import { Box, Grid, Modal, Typography } from '@mui/material'
 import './LoginModal.scss'
 import { BasicInput } from 'Lib/Inputs'
 import { GradientBorderButton } from 'Lib/Buttons'
 import { useAppDispatch, useAppSelector } from 'Hooks'
 import { login } from 'Reducers/authSlice'
-import useReduceEffect from 'Hooks/useReduceEffect'
 import useGenericForm from 'Hooks/useGenericForm'
+import { snackbarActions } from 'Reducers/snackbarSlice'
+import { getUser } from 'Reducers/userSlice'
 
 interface Props {
     open: boolean
@@ -22,93 +23,108 @@ export const randomModalAnimation = (): string => {
 
 const LoginModal = ({ open, onClose }: Props): JSX.Element => {
     const genericForm = useGenericForm({
-        email: '',
+        mail: '',
         password: '',
     })
 
     const dispatch = useAppDispatch()
-    const { isLoading, error, success } = useAppSelector((app) => app.auth)
-
-    const [isError, setIsError] = React.useState<boolean>(false)
-    const [isSuccess, setIsSuccess] = React.useState<boolean>(false)
-
-    useReduceEffect(
-        (previousValue) => {
-            if (previousValue === false) {
-                return
-            }
-            if (error !== undefined) {
-                setIsError(true)
-            }
-            if (success) {
-                setIsSuccess(true)
-                onClose()
-            }
-        },
-        [isLoading],
-    )
+    const { isLoading } = useAppSelector((app) => app.auth)
 
     const handleSubmit = (): void => {
         dispatch(
             login({
-                email: genericForm.fieldValues.email,
+                mail: genericForm.fieldValues.mail,
                 password: genericForm.fieldValues.password,
             }),
         )
+            .unwrap()
+            .then(() => {
+                dispatch(getUser())
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: 'You have been logged in',
+                        type: 'success',
+                    }),
+                )
+                onClose()
+            })
+            .catch((err) => {
+                console.log(err)
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: err,
+                        type: 'error',
+                    }),
+                )
+            })
     }
 
     return (
         <Grid container>
             <Grid item>
-                <Modal open={open} onClose={onClose}>
+                <Modal
+                    open={open}
+                    onClose={() => {
+                        genericForm.resetAll()
+                        onClose()
+                    }}>
                     <Box className={`modal ${randomModalAnimation()}`}>
                         <Grid
                             container
                             direction='column'
                             justifyContent='center'
                             alignItems='center'
+                            wrap='nowrap'
+                            gap='20px'
                             style={{ padding: 50 }}>
-                            <Typography
-                                color='white'
-                                fontSize='19px'
-                                fontFamily='Roboto-Regular'>
-                                Login
-                            </Typography>
-                            <BasicInput
-                                placeholder={'Mail address'}
-                                style={{ marginBlock: 45 }}
-                                {...genericForm.generateInputAttributes(
-                                    'email',
-                                )}
-                            />
-                            <BasicInput
-                                placeholder={'Password'}
-                                type={'password'}
-                                {...genericForm.generateInputAttributes(
-                                    'password',
-                                )}
-                            />
-                            <GradientBorderButton
-                                text='Login'
-                                style={{ marginTop: 45 }}
-                                onClick={handleSubmit}
-                                disabled={isLoading}></GradientBorderButton>
+                            <Grid item display='grid'>
+                                <Typography
+                                    color='white'
+                                    fontSize='19px'
+                                    fontFamily='Roboto-Regular'>
+                                    Login
+                                </Typography>
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Mail address'}
+                                    {...genericForm.generateInputAttributes(
+                                        'mail',
+                                        { isRequired: true, type: 'email' },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <BasicInput
+                                    placeholder={'Password'}
+                                    type={'password'}
+                                    {...genericForm.generateInputAttributes(
+                                        'password',
+                                        {
+                                            isRequired: true,
+                                            minLength: 8,
+                                            maxLength: 20,
+                                        },
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item display='grid'>
+                                <GradientBorderButton
+                                    text='Login'
+                                    onClick={() =>
+                                        genericForm.submitValues(
+                                            () => handleSubmit(),
+                                            () => {
+                                                return
+                                            },
+                                        )
+                                    }
+                                    disabled={isLoading}></GradientBorderButton>
+                            </Grid>
                         </Grid>
                     </Box>
                 </Modal>
             </Grid>
-            <Snackbar
-                open={isError}
-                autoHideDuration={3000}
-                onClose={() => setIsError(false)}>
-                <Alert severity='error'>{error?.message}</Alert>
-            </Snackbar>
-            <Snackbar
-                open={isSuccess}
-                autoHideDuration={3000}
-                onClose={() => setIsSuccess(false)}>
-                <Alert severity='success'>{'You have been logged in'}</Alert>
-            </Snackbar>
         </Grid>
     )
 }
