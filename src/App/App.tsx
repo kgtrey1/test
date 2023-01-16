@@ -4,7 +4,6 @@ import MySnackbar from 'Lib/Snackbars/MySnackbar'
 import MobileUPEdit from 'Lib/UserProfile/MobileUserProfile/MobileUPEdit'
 import { Games, Home, NotFound, Team, UserProfile } from 'Pages'
 import GameDetails from 'Pages/GameDetails/GameDetails'
-import MobileUserProfile from 'Pages/UserProfile/MobileUserProfile'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { snackbarActions } from 'Reducers/snackbarSlice'
@@ -64,16 +63,6 @@ const App: React.FunctionComponent = (): JSX.Element => {
                                 'Lol is an online video game developed by Epic Games and released in 2017. It is available in three distinct game mode versions that otherwise share the same general gameplay and game engine..'
                             }
                             modes={['solo', 'duo', 'trio', 'squad']}
-                        />
-                    }
-                />
-                <Route
-                    path='/mobileUserProfile'
-                    element={
-                        <MobileUserProfile
-                            username={'Faez'}
-                            email={'faezdhuny786@gmail.com'}
-                            bio={'Je suis un bg'}
                         />
                     }
                 />
