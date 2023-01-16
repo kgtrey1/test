@@ -1,83 +1,45 @@
 import { Grid, Typography } from '@mui/material'
-import { IUser } from 'Interfaces/IUser'
 import { GradientBackgroundButton } from 'Lib/Buttons'
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import axios from 'axios'
 import React from 'react'
+import { useAppDispatch, useAppSelector } from 'Hooks'
+import { updateUser } from 'Reducers/userSlice'
+import { snackbarActions } from 'Reducers/snackbarSlice'
 
-interface IUserProfileEditSection extends IUser {
+interface IUserProfileEditSection {
     nameInputHeight?: string
     nameInputWidth?: string
     bioInputHeight?: string
     bioInputWidth?: string
 }
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref,
-) {
-    return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
-})
-
 const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
     props,
 ): JSX.Element => {
-    const [open, setOpen] = React.useState(false)
-    const [snackbarText, setSnackBarText] = React.useState(
-        'Account updated successfully!',
-    )
-    const [snackBarColor, setSnackBarColor] = React.useState('success')
-    const [username, setUsername] = React.useState('Faez')
-    const [bio, setBio] = React.useState('Je suis un gamer')
+    const user = useAppSelector((x) => x.user)
+    const dispatch = useAppDispatch()
+    const [username, setUsername] = React.useState(user.user?.username)
+    const [bio, setBio] = React.useState(user.user?.bio)
 
-    const updateUserInfo = (
-        newUsername: string,
-        newFirstname: string,
-        newLastname: string,
-    ) => {
-        axios
-            .put(
-                'https://staging-api.erise.gg/user/63346243725d5718ce17f94d',
-                {
-                    username: newUsername,
-                    firstname: newFirstname,
-                    lastname: newLastname,
-                },
-                {
-                    headers: {
-                        Authorization:
-                            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthZGVyaXRvIiwiaWF0IjoxNjYzNjk3MjI1LCJleHAiOjE2NjM5NTY0MjV9.amGeRUa-Fg_TBdajWxBzbDi9DitDMXesSGmoeIhsXHE',
-                    },
-                },
-            )
-            .then(function (response) {
-                if (response.status === 200) {
-                    setSnackBarText('Account updated successfully!')
-                    setSnackBarColor('success')
-                } else {
-                    setSnackBarText('Oups something went wrong!')
-                    setSnackBarColor('error')
-                }
-                setOpen(true)
-                return response.status
+    const updateUserInfo = () => {
+        dispatch(updateUser({ username: username, bio: bio }))
+            .unwrap()
+            .then(() => {
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: 'Account updated successfully!',
+                        type: 'success',
+                    }),
+                )
             })
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .catch(function (error) {
-                setSnackBarColor('error')
-                return 500
+            .catch((error) => {
+                console.log(error)
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: error,
+                        type: 'error',
+                    }),
+                )
             })
-    }
-
-    const handleClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string,
-    ) => {
-        if (reason === 'clickaway') {
-            return
-        }
-
-        setOpen(false)
     }
 
     return (
@@ -131,7 +93,7 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
                     background: '#1A285B',
                 }}>
                 <input
-                    defaultValue={bio}
+                    defaultValue={bio as string}
                     type='text'
                     onChange={(e) => {
                         setBio(e.target.value)
@@ -152,19 +114,10 @@ const UserProfileEditSection: React.FC<IUserProfileEditSection> = (
                 item
                 paddingTop='55px'
                 onClick={() => {
-                    console.log('SAVE HAS BEEN PRESSED')
-                    updateUserInfo(username, 'Faez le bg', 'Dhuny')
+                    updateUserInfo()
                 }}>
                 <GradientBackgroundButton type='submit' text='Save' />
             </Grid>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert
-                    onClose={handleClose}
-                    severity={snackBarColor === 'success' ? 'success' : 'error'}
-                    sx={{ width: '100%' }}>
-                    {snackbarText}
-                </Alert>
-            </Snackbar>
         </Grid>
     )
 }

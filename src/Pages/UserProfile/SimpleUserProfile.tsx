@@ -8,13 +8,14 @@ import UserProfilePicture from 'Lib/UserProfile/UserProfilePicture'
 import { useNavigate } from 'react-router-dom'
 import UserProfileSections from 'Lib/UserProfile/UserProfileSections'
 import LinkAccount from 'Lib/UserProfile/LinkAccount'
-import { IUser } from '../../Interfaces/IUser'
 import UserProfilePreview from 'Lib/UserProfile/UserProfilePreview'
 import UserProfileEditSection from 'Lib/UserProfile/UserProfileEditSection'
+import { useAppSelector } from 'Hooks'
 
-const SimpleUserProfile: React.FC<IUser> = (props): JSX.Element => {
+const SimpleUserProfile: React.FC = (): JSX.Element => {
     const navigate = useNavigate()
     const [editSection, setEditSection] = React.useState(false)
+    const user = useAppSelector((x) => x.user)
 
     return (
         <Grid container direction='row' width='100vw' height='100vh'>
@@ -40,7 +41,7 @@ const SimpleUserProfile: React.FC<IUser> = (props): JSX.Element => {
                             fontFamily='Roboto-Regular'
                             fontSize='19px'
                             fontWeight='bold'>
-                            {props.username}
+                            {user.user?.username}
                         </Typography>
                     </Grid>
                     <Grid item paddingTop='53.41px' width='100%'>
@@ -114,15 +115,13 @@ const SimpleUserProfile: React.FC<IUser> = (props): JSX.Element => {
                                 </button>
                             </Grid>
                             {editSection ? (
-                                <UserProfileEditSection
-                                    username={props.username}
-                                    email={props.email}
-                                    bio={props.bio}></UserProfileEditSection>
+                                <UserProfileEditSection />
                             ) : (
                                 <UserProfilePreview
-                                    username={props.username}
-                                    email={props.email}
-                                    bio={props.bio}></UserProfilePreview>
+                                    username={user.user?.username as string}
+                                    email={user.user?.mail as string}
+                                    bio={user.user?.bio as string}
+                                />
                             )}
                         </Grid>
                     </Grid>

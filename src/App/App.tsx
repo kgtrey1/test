@@ -42,16 +42,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
                 <Route path='/games' element={<Games />} />
                 <Route path='/team' element={<Team />} />
                 <Route path='*' element={<NotFound />} />
-                <Route
-                    path='/userProfile'
-                    element={
-                        <UserProfile
-                            username='Joueur1'
-                            bio='Je suis un gamer!'
-                            email='joueur1@gaming.gg'
-                        />
-                    }
-                />
+                <Route path='/userProfile' element={<UserProfile />} />
                 <Route
                     path='/games/rocketleague'
                     element={
@@ -66,16 +57,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
                         />
                     }
                 />
-                <Route
-                    path='/userProfile/edit'
-                    element={
-                        <MobileUPEdit
-                            username={'Faez'}
-                            email={'faezdhuny786@gmail.com'}
-                            bio={'Je suis un bg'}
-                        />
-                    }
-                />
+                <Route path='/userProfile/edit' element={<MobileUPEdit />} />
             </Routes>
         </>
     )

@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material'
-import { IUser } from 'Interfaces/IUser'
 import React from 'react'
 import UserProfilePicture from '../UserProfilePicture'
 import MobileUPBar from './MobileUPBar'
@@ -8,7 +7,7 @@ import UserProfileEditSection from '../UserProfileEditSection'
 import { useMediaQuery } from 'react-responsive'
 import SimpleUserProfile from 'Pages/UserProfile/SimpleUserProfile'
 
-const MobileUPEdit: React.FC<IUser> = (props): JSX.Element => {
+const MobileUPEdit: React.FC = (): JSX.Element => {
     const isMobileDevice = useMediaQuery({
         query: '(min-device-width: 480px)',
     })
@@ -30,9 +29,6 @@ const MobileUPEdit: React.FC<IUser> = (props): JSX.Element => {
                         </Grid>
                         <Grid item paddingTop='50px' alignSelf='center'>
                             <UserProfileEditSection
-                                username={props.username}
-                                email={props.email}
-                                bio={props.bio}
                                 nameInputHeight='60px'
                                 nameInputWidth='350px'
                                 bioInputHeight='100px'
@@ -42,11 +38,7 @@ const MobileUPEdit: React.FC<IUser> = (props): JSX.Element => {
                     </Grid>
                 </Grid>
             ) : (
-                <SimpleUserProfile
-                    username={props.username}
-                    email={props.email}
-                    bio={props.bio}
-                />
+                <SimpleUserProfile />
             )}
         </Grid>
     )

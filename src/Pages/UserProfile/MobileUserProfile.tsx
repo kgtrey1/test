@@ -1,12 +1,14 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import { IUser } from 'Interfaces/IUser'
 import UserProfilePicture from 'Lib/UserProfile/UserProfilePicture'
 import MobileUPBar from 'Lib/UserProfile/MobileUserProfile/MobileUPBar'
 import UserProfileSections from 'Lib/UserProfile/UserProfileSections'
 import LinkAccount from 'Lib/UserProfile/LinkAccount'
+import { useAppSelector } from 'Hooks'
 
-const MobileUserProfile: React.FC<IUser> = (props): JSX.Element => {
+const MobileUserProfile: React.FC = (): JSX.Element => {
+    const user = useAppSelector((x) => x.user)
+
     return (
         <Grid
             container
@@ -15,7 +17,7 @@ const MobileUserProfile: React.FC<IUser> = (props): JSX.Element => {
             width='100vw'
             style={{ background: '#0B1946' }}>
             <Grid item>
-                <MobileUPBar navigatePath='/userProfile/edit' />
+                <MobileUPBar navigatePath='/' />
             </Grid>
             <Grid item paddingTop='73px' alignSelf='center'>
                 <UserProfilePicture />
@@ -26,7 +28,7 @@ const MobileUserProfile: React.FC<IUser> = (props): JSX.Element => {
                     fontFamily='Roboto-Regular'
                     fontSize='19px'
                     fontWeight='bold'>
-                    {props.username}
+                    {user.user?.username}
                 </Typography>
             </Grid>
             <Grid item paddingTop='53.41px' width='100%'>
