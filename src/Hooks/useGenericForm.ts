@@ -8,6 +8,7 @@ export interface OptionsFieldAttributes {
     minLength?: number
     maxLength?: number
     isRequired?: boolean
+    similarity?: [string, string]
 }
 
 type useGenericFormType = <FieldValuesType>(
@@ -106,6 +107,11 @@ const useGenericForm: useGenericFormType = (initFieldValues) => {
                 return {
                     hasError: true,
                     errorMessage: `Please enter a valid phone number`,
+                }
+            } else if (options.similarity?.[0] != options.similarity?.[1]) {
+                return {
+                    hasError: true,
+                    errorMessage: `Password and Confirm Password are not the same`,
                 }
             }
         }
