@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import React from 'react'
+import LastTournaments from './LastTournaments/LastTournaments'
 
 interface IGameDetails {
     imageURL: string
@@ -62,7 +63,7 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
                             <Typography
                                 color='white'
                                 fontFamily='Roboto-Regular'
-                                fontSize='30px'>
+                                fontSize='3vh'>
                                 Mode
                             </Typography>
                         </Grid>
@@ -94,6 +95,9 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
                             </Box>
                         </Grid>
                     </Grid>
+                </Grid>
+                <Grid item>
+                    <LastTournaments />
                 </Grid>
             </Grid>
         </Page>
