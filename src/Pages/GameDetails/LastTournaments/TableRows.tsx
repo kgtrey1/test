@@ -19,7 +19,7 @@ const TableRows: React.FC<ITableRows> = (props): JSX.Element => {
                         <Typography
                             color='white'
                             fontFamily='Roboto-Regular'
-                            fontSize='1.8vh'>
+                            fontSize='1.2vw'>
                             {values.time}
                         </Typography>
                     </Grid>
@@ -27,7 +27,7 @@ const TableRows: React.FC<ITableRows> = (props): JSX.Element => {
                         <Typography
                             color='white'
                             fontFamily='Roboto-Regular'
-                            fontSize='1.8vh'>
+                            fontSize='1.2vw'>
                             {values.mode}
                         </Typography>
                     </Grid>
@@ -35,7 +35,7 @@ const TableRows: React.FC<ITableRows> = (props): JSX.Element => {
                         <Typography
                             color='white'
                             fontFamily='Roboto-Regular'
-                            fontSize='1.8vh'>
+                            fontSize='1.2vw'>
                             {values.winners}
                         </Typography>
                     </Grid>

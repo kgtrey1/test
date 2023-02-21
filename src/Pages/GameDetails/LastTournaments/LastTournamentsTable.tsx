@@ -14,7 +14,7 @@ const LastTournamentsTable: React.FC<ILastTournamentTable> = (
                 <Typography
                     color='white'
                     fontFamily='Roboto-Regular'
-                    fontSize='2vh'>
+                    fontSize='1.5vw'>
                     {props.titles[0]}
                 </Typography>
             </Grid>
@@ -22,7 +22,7 @@ const LastTournamentsTable: React.FC<ILastTournamentTable> = (
                 <Typography
                     color='white'
                     fontFamily='Roboto-Regular'
-                    fontSize='2vh'>
+                    fontSize='1.5vw'>
                     {props.titles[1]}
                 </Typography>
             </Grid>
@@ -30,7 +30,7 @@ const LastTournamentsTable: React.FC<ILastTournamentTable> = (
                 <Typography
                     color='white'
                     fontFamily='Roboto-Regular'
-                    fontSize='2vh'>
+                    fontSize='1.5vw'>
                     {props.titles[2]}
                 </Typography>
             </Grid>

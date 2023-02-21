@@ -9,7 +9,7 @@ const LastTournamentsTitle: React.FC<ILastTournamentsTitle> = (
     props,
 ): JSX.Element => {
     return (
-        <Typography color='white' fontFamily='Roboto-Regular' fontSize='3vh'>
+        <Typography color='white' fontFamily='Roboto-Regular' fontSize='2vw'>
             {props.title}
         </Typography>
     )
