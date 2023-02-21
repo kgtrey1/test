@@ -11,10 +11,18 @@ interface IPage {
     hideFooter?: boolean
     className?: string
     style?: React.CSSProperties
+    marginOverride?: string | number
 }
 
 const Page: React.FunctionComponent<IPage> = (props: IPage): JSX.Element => {
-    const { hideNavbar, hideFooter, className, children, style } = props
+    const {
+        hideNavbar,
+        hideFooter,
+        className,
+        children,
+        style,
+        marginOverride,
+    } = props
 
     /*
     // Loading every page
@@ -69,10 +77,10 @@ const Page: React.FunctionComponent<IPage> = (props: IPage): JSX.Element => {
                 item
                 xs
                 display='grid'
-                marginTop='10%'
-                marginLeft='10%'
-                marginRight='10%'
-                marginBottom='10%'
+                marginTop={marginOverride ? marginOverride : '10%'}
+                marginLeft={marginOverride ? marginOverride : '10%'}
+                marginRight={marginOverride ? marginOverride : '10%'}
+                marginBottom={marginOverride ? marginOverride : '10%'}
                 style={{
                     //backgroundImage: `url(${backgroundImage})`,
                     //backgroundRepeat: 'no-repeat',
@@ -95,6 +103,7 @@ Page.defaultProps = {
     hideFooter: false,
     className: 'page-body',
     style: undefined,
+    marginOverride: '10%',
 }
 
 export default Page

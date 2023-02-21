@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from 'Hooks'
 import MySnackbar from 'Lib/Snackbars/MySnackbar'
 import UserProfileEdit from 'Lib/UserProfile/UserProfileEdit'
 import { Games, Home, NotFound, Team, UserProfile } from 'Pages'
+import EndOfGame from 'Pages/EndOfGame/EndOfGame'
 import GameDetails from 'Pages/GameDetails/GameDetails'
 import Policy from 'Pages/Policy/Policy'
 import React from 'react'
@@ -40,6 +41,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
             <AppSnackbar />
             <Routes>
                 <Route path='/' element={<Home />} />
+                <Route path='/end_of_game/:matchId' element={<EndOfGame />} />
                 <Route path='/games' element={<Games />} />
                 <Route path='/team' element={<Team />} />
                 <Route path='*' element={<NotFound />} />
