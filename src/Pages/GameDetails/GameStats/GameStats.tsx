@@ -24,11 +24,13 @@ const GamesStats: React.FC = (): JSX.Element => {
             <Grid item paddingTop='5vh' alignSelf='center' width='80%'>
                 <GameStatsTable
                     categories={[
-                        'username',
-                        'goals',
-                        'assists',
-                        'clears',
-                        'shots',
+                        'Username',
+                        'Goals',
+                        'Assists',
+                        'Clears',
+                        'Shots',
+                        'Centers',
+                        'Saves',
                     ]}
                     stats={[
                         {

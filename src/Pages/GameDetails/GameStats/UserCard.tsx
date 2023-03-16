@@ -19,6 +19,7 @@ const UserCard: React.FC<IUserCard> = (props): JSX.Element => {
                     width='200vw'
                     alt='User Profile Picture'
                     src={props.profilePicURL}
+                    style={{ borderRadius: '2vw' }}
                 />
             </Grid>
             <Grid item>

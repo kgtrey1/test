@@ -5,7 +5,6 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
 
 interface IGameStatsTable {
     categories: string[]
@@ -21,6 +20,7 @@ interface IGameStatsTable {
                 saves: number
                 shots: number
                 clears: number
+                [key: string]: number
             }
         }
     }>
@@ -28,15 +28,22 @@ interface IGameStatsTable {
 
 const GameStatsTable: React.FC<IGameStatsTable> = (props): JSX.Element => {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer sx={{ backgroundColor: '#1A285B' }}>
             <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Username</TableCell>
-                        <TableCell align='right'>Goals</TableCell>
-                        <TableCell align='right'>Assists</TableCell>
-                        <TableCell align='right'>Clears</TableCell>
-                        <TableCell align='right'>Shots</TableCell>
+                        {props.categories.map((value, key) => (
+                            <TableCell
+                                key={key}
+                                sx={{ fontSize: '1.2vw' }}
+                                style={
+                                    key === 0
+                                        ? { textAlign: 'left' }
+                                        : { textAlign: 'center' }
+                                }>
+                                {value}
+                            </TableCell>
+                        ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -48,21 +55,27 @@ const GameStatsTable: React.FC<IGameStatsTable> = (props): JSX.Element => {
                                     border: 0,
                                 },
                             }}>
-                            <TableCell component='th' scope='row'>
+                            <TableCell
+                                component='th'
+                                scope='row'
+                                style={{ fontSize: '1vw' }}
+                                sx={
+                                    value.wonMatch
+                                        ? { color: 'gold' }
+                                        : { color: 'black' }
+                                }>
                                 {value.players.username}
                             </TableCell>
-                            <TableCell align='right'>
-                                {value.players.stats.goals}
-                            </TableCell>
-                            <TableCell align='right'>
-                                {value.players.stats.assists}
-                            </TableCell>
-                            <TableCell align='right'>
-                                {value.players.stats.clears}
-                            </TableCell>
-                            <TableCell align='right'>
-                                {value.players.stats.shots}
-                            </TableCell>
+                            {Object.keys(value.players.stats).map(
+                                (keyStats) => (
+                                    <TableCell
+                                        key={keyStats}
+                                        sx={{ fontSize: '1vw' }}
+                                        align='center'>
+                                        {value.players.stats[keyStats]}
+                                    </TableCell>
+                                ),
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>
