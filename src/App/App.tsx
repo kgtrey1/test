@@ -5,6 +5,7 @@ import UserProfileEdit from 'Lib/UserProfile/UserProfileEdit'
 import { Games, Home, NotFound, Team, UserProfile } from 'Pages'
 import EndOfGame from 'Pages/EndOfGame/EndOfGame'
 import GameDetails from 'Pages/GameDetails/GameDetails'
+import GamesStats from 'Pages/GameDetails/GameStats/GameStats'
 import Policy from 'Pages/Policy/Policy'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
@@ -58,9 +59,13 @@ const App: React.FunctionComponent = (): JSX.Element => {
                             description={
                                 'Lol is an online video game developed by Epic Games and released in 2017. It is available in three distinct game mode versions that otherwise share the same general gameplay and game engine..'
                             }
-                            modes={['solo', 'duo', 'trio', 'squad']}
+                            modes={['1v1', '2v2', '3v3', '4v4']}
                         />
                     }
+                />
+                <Route
+                    path='/games/rocketleague/123'
+                    element={<GamesStats />}
                 />
             </Routes>
         </>

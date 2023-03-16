@@ -7,38 +7,37 @@ import TableRows from './TableRows'
 const LastTournaments: React.FC = (): JSX.Element => {
     return (
         <Grid container direction='column' width='60vw'>
-            <Grid item paddingLeft='3.5vw' paddingTop='3vh'>
+            <Grid item paddingLeft='3.5vw' paddingTop='1.5vw'>
                 <LastTournamentsTitle title='Last tournaments' />
             </Grid>
             <Grid
                 item
                 width='100%'
-                marginTop='3vh'
-                paddingTop='1.5vh'
-                paddingBottom='1.5vh'
+                marginTop='1.5vw'
+                paddingTop='1vw'
                 style={{ background: '#1A285B' }}>
-                <LastTournamentsTable titles={['time', 'mode', 'winners']} />
+                <LastTournamentsTable titles={['Time', 'Mode', 'Winners']} />
             </Grid>
             <Grid
                 item
                 width='100%'
-                paddingTop='1vh'
+                paddingTop='0.8vw'
                 style={{ background: '#1A285B' }}>
                 <TableRows
                     lastGames={[
                         {
                             time: '1h',
-                            mode: 'solo',
+                            mode: '1v1',
                             winners: 'faez',
                         },
                         {
                             time: '3h',
-                            mode: 'trio',
+                            mode: '3v3',
                             winners: 'faez, lexou and karima',
                         },
                         {
                             time: '1 day',
-                            mode: 'duo',
+                            mode: '2v2',
                             winners: 'faez and karima',
                         },
                     ]}
