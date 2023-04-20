@@ -1,11 +1,26 @@
+import { Grid } from '@mui/material'
 import { Page } from 'Lib/Pages'
-import { Title } from 'Lib/Texts'
 import React from 'react'
+import TeamCard, { ITeamCard } from './TeamCard'
 
-const Team: React.FunctionComponent = (): JSX.Element => {
+interface ITeam {
+    teams: Array<ITeamCard>
+}
+
+const Team: React.FunctionComponent<ITeam> = (props): JSX.Element => {
     return (
         <Page>
-            <Title text='' />
+            <Grid container direction='row'>
+                {props.teams.map((value, key) => (
+                    <Grid item xs={3} paddingBottom='8vh' key={key}>
+                        <TeamCard
+                            name={value.name}
+                            description={value.description}
+                            pictureURL={value.pictureURL}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
         </Page>
     )
 }

@@ -44,7 +44,22 @@ const App: React.FunctionComponent = (): JSX.Element => {
                 <Route path='/' element={<Home />} />
                 <Route path='/end_of_game/:matchId' element={<EndOfGame />} />
                 <Route path='/games' element={<Games />} />
-                <Route path='/team' element={<Team />} />
+                <Route
+                    path='/team'
+                    element={
+                        <Team
+                            teams={[
+                                {
+                                    name: 'marksman',
+                                    description:
+                                        'Rocket League e-sport team! 3 times world champions!',
+                                    pictureURL:
+                                        'https://i.pinimg.com/736x/f3/ae/65/f3ae65f670ef9c745e2f78fb5f130ff9.jpg',
+                                },
+                            ]}
+                        />
+                    }
+                />
                 <Route path='*' element={<NotFound />} />
                 <Route path='/userProfile' element={<UserProfile />} />
                 <Route path='/Policy' element={<Policy />} />
