@@ -47,7 +47,14 @@ const initialState: UserState = {
 export const userSlice = createSlice({
     name: 'User',
     initialState,
-    reducers: {},
+    reducers: {
+        logout: (state) => {
+            localStorage.removeItem('token')
+            state.isLoading = false
+            state.user = undefined
+            state.error = undefined
+        },
+    },
     extraReducers(builder: ActionReducerMapBuilder<UserState>) {
         builder.addCase(getUser.pending, (state) => {
             state.isLoading = true
@@ -78,6 +85,8 @@ export const userSlice = createSlice({
         })
     },
 })
+
+export const { logout } = userSlice.actions
 
 export { getUser, updateUser }
 

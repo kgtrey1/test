@@ -13,15 +13,7 @@ interface IGameStatsTable {
         players: {
             eriseId: string
             username: string
-            stats: {
-                goals: number
-                assists: number
-                centers: number
-                saves: number
-                shots: number
-                clears: number
-                [key: string]: number
-            }
+            stats: any
         }
     }>
 }

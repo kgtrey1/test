@@ -11,6 +11,7 @@ import LinkAccount from 'Lib/UserProfile/LinkAccount'
 import UserProfilePreview from 'Lib/UserProfile/UserProfilePreview'
 import UserProfileEditSection from 'Lib/UserProfile/UserProfileEditSection'
 import { useAppSelector } from 'Hooks'
+import UserLogOutButton from 'Lib/UserProfile/UserLogOutButton'
 
 const SimpleUserProfile: React.FC = (): JSX.Element => {
     const navigate = useNavigate()
@@ -32,23 +33,26 @@ const SimpleUserProfile: React.FC = (): JSX.Element => {
                             onClick={() => navigate('/')}
                         />
                     </Grid>
-                    <Grid item paddingTop='73px'>
+                    <Grid item paddingTop='7vh'>
                         <UserProfilePicture />
                     </Grid>
-                    <Grid item paddingTop='43.19px'>
+                    <Grid item paddingTop='5.5vh'>
                         <Typography
                             color='white'
                             fontFamily='Roboto-Regular'
-                            fontSize='19px'
+                            fontSize='1vw'
                             fontWeight='bold'>
                             {user.user?.username}
                         </Typography>
                     </Grid>
-                    <Grid item paddingTop='53.41px' width='100%'>
+                    <Grid item paddingTop='5.5vh' width='100%'>
                         <UserProfileSections />
                     </Grid>
-                    <Grid item paddingTop='27px'>
+                    <Grid item paddingTop='5.5vh'>
                         <LinkAccount />
+                    </Grid>
+                    <Grid item paddingTop='5.5vh'>
+                        <UserLogOutButton />
                     </Grid>
                 </Grid>
             </Grid>
