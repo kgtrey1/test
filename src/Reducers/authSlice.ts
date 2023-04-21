@@ -14,14 +14,12 @@ const login = createAsyncThunk<
         rejectValue: NetworkError
     }
 >('Auth/LOGIN', async (payload, thunkAPI): Promise<any> => {
+    const API_URL = process.env.REACT_APP_API_URL
     try {
-        const response = await axios.post(
-            'https://staging-api.erise.gg/auth/login',
-            {
-                mail: payload.mail,
-                password: payload.password,
-            },
-        )
+        const response = await axios.post(`${API_URL}/auth/login`, {
+            mail: payload.mail,
+            password: payload.password,
+        })
         return thunkAPI.fulfillWithValue(response.data as Object.LoginReply)
     } catch (err: any) {
         return thunkAPI.rejectWithValue(err?.response?.data?.error)
@@ -35,17 +33,15 @@ const register = createAsyncThunk<
         rejectValue: NetworkError
     }
 >('Auth/REGISTER', async (payload, thunkAPI): Promise<any> => {
+    const API_URL = process.env.REACT_APP_API_URL
     try {
-        const response = await axios.post(
-            'https://staging-api.erise.gg/auth/register',
-            {
-                mail: payload.mail,
-                password: payload.password,
-                username: payload.username,
-                firstname: payload.firstname,
-                lastname: payload.lastname,
-            },
-        )
+        const response = await axios.post(`${API_URL}/auth/register`, {
+            mail: payload.mail,
+            password: payload.password,
+            username: payload.username,
+            firstname: payload.firstname,
+            lastname: payload.lastname,
+        })
         return thunkAPI.fulfillWithValue(response.data as Object.RegisterReply)
     } catch (err: any) {
         return thunkAPI.rejectWithValue(err?.response?.data?.error)

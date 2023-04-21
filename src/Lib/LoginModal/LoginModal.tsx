@@ -102,7 +102,7 @@ const LoginModal = ({ open, onClose }: Props): JSX.Element => {
                                         'password',
                                         {
                                             isRequired: true,
-                                            minLength: 8,
+                                            minLength: 4,
                                             maxLength: 20,
                                         },
                                     )}

@@ -26,7 +26,8 @@ const Games: React.FunctionComponent = (): JSX.Element => {
     React.useEffect(() => {
         setIsLoading(true)
         const updateGames = async () => {
-            const res = await fetch('https://staging-api.erise.gg/games')
+            const API_URL = process.env.REACT_APP_API_URL
+            const res = await fetch(`${API_URL}/games`)
             const data = await res.json()
             const gamesTmp = []
             const tagsListTmp: string[] = []

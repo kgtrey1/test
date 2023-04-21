@@ -90,7 +90,7 @@ const ScoreBoard: React.FC<{
     const [tableData, setTableData] = React.useState<Array<Array<string>>>([])
     const createNewLineFromPlayer = (player: Player): Array<string> => {
         const newLine = []
-        newLine.push(player.eriseId)
+        newLine.push(player.stats?.rocketUsername)
         for (const k of props.statKeys) {
             if (k in player.stats) {
                 const s = player.stats[k]
@@ -215,7 +215,7 @@ const GameImageAndWinners: React.FC<{ winners: Player[] }> = (props) => {
                                 props.winners.length === 0
                                     ? 'No winner'
                                     : props.winners
-                                          .map((x) => x.eriseId)
+                                          .map((x) => x.stats?.rocketUsername)
                                           .join(', ')
                             }
                             style={{
@@ -242,7 +242,12 @@ const EndOfGameSuccess: React.FC<{ match: MyObject.Match }> = (props) => {
         }
         if (typeof match?.teams?.[0]?.players?.[0]?.stats === 'object') {
             const statKeys = Object.keys(match?.teams?.[0]?.players?.[0]?.stats)
-            setStatKeys(statKeys)
+            console.log(statKeys)
+            setStatKeys(
+                statKeys.filter(
+                    (x) => !['steamId', '_id', 'rocketUsername'].includes(x),
+                ),
+            )
         }
         setWinners(extractPlayersFromTeams(match, true))
         setLoosers(extractPlayersFromTeams(match, false))

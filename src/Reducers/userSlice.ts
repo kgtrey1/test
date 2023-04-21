@@ -25,10 +25,17 @@ const updateUser = createAsyncThunk<
     },
 )
 
-const getUser = createAsyncThunk('/USER', async (): Promise<Object.User> => {
-    const response = await makeAPIRequest('get', '/user')
-    return response.data as Object.User
-})
+const getUser = createAsyncThunk(
+    '/USER',
+    async (payload, thunkAPI): Promise<Object.User> => {
+        try {
+            const response = await makeAPIRequest('get', '/user')
+            return thunkAPI.fulfillWithValue(response.data) as any
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err) as any
+        }
+    },
+)
 
 interface UserState {
     user: Object.User | undefined

@@ -16,7 +16,21 @@ const useAuth = () => {
     const dispatch = useAppDispatch()
     React.useEffect(() => {
         dispatch(getUser())
-    }, [])
+            .unwrap()
+            .then(() => {
+                return
+            })
+            .catch((err) => {
+                /*
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        type: 'error',
+                        message: 'Cannot get user informations',
+                    }),
+                )
+                */
+            })
+    }, [dispatch, snackbarActions])
 }
 
 const AppSnackbar: React.FC = () => {
