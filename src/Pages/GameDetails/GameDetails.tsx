@@ -17,6 +17,7 @@ import {
 } from 'Reducers/matchSlice'
 import { Text } from 'Lib/Texts'
 import { useNavigate } from 'react-router'
+import { getTournament } from 'Reducers/tournamentSlice'
 
 interface IGameDetails {
     imageURL: string
@@ -397,12 +398,28 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
     const match = useAppSelector((x) => x.match)
     const navigate = useNavigate()
     const [isSettedOnMessage, setIsSettedOnMessage] = React.useState(false)
+    const tournaments = useAppSelector((x) => x.tournament)
 
     const handleChange = (event: SelectChangeEvent) => {
         setMode(event.target.value as string)
     }
 
+    const getTournaments = () => {
+        dispatch(getTournament())
+            .unwrap()
+            .catch((error: any) => {
+                console.log(error)
+                dispatch(
+                    snackbarActions.openSnackbar({
+                        message: error,
+                        type: 'error',
+                    }),
+                )
+            })
+    }
+
     React.useEffect(() => {
+        getTournaments()
         if (isSettedOnMessage) {
             return
         }

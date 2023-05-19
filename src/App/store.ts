@@ -3,6 +3,7 @@ import userSlice from 'Reducers/userSlice'
 import authSlice from 'Reducers/authSlice'
 import snackbarSlice from 'Reducers/snackbarSlice'
 import matchSlice from 'Reducers/matchSlice'
+import tournamentSlice from 'Reducers/tournamentSlice'
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         user: userSlice,
         snackbar: snackbarSlice,
         match: matchSlice,
+        tournament: tournamentSlice,
     },
     devTools: true,
     middleware: (getDefaultMiddleware) =>
