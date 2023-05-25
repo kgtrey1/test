@@ -547,7 +547,10 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
                                                     snackbarActions.openSnackbar(
                                                         {
                                                             type: 'error',
-                                                            message: err,
+                                                            message:
+                                                                err?.message
+                                                                    ? err.message
+                                                                    : err,
                                                         },
                                                     )
                                                 })
