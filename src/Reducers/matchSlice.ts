@@ -54,7 +54,7 @@ const setMatchPending = createAsyncThunk<
     '/SET_MATCH_PENDING',
     async (payload, { rejectWithValue, fulfillWithValue }): Promise<any> => {
         try {
-            const SERVER = 'wss://52.47.77.87:9999'
+            const SERVER = 'wss://staging-api.erise.gg:9999'
             const ws = new WebSocket(SERVER)
             ws.onopen = () => {
                 ws?.send(
