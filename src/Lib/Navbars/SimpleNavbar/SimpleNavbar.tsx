@@ -4,6 +4,10 @@ import './SimpleNavbar.scss'
 import EriseLogo from './EriseLogo'
 import NavigationButtons from './NavigationButtons'
 import StartAndLoginButtons from './StartAndLoginButtons'
+import { useAppSelector } from 'Hooks'
+import { ReactComponent as IconAccount } from 'Assets/icons/account.svg'
+import { IconTextButton } from 'Lib/Buttons'
+import { useNavigate } from 'react-router-dom'
 
 interface ISimpleNavbar {
     className?: string
@@ -14,6 +18,8 @@ const SimpleNavbar: React.FunctionComponent<ISimpleNavbar> = (
     props: ISimpleNavbar,
 ): JSX.Element => {
     const { className, style } = props
+    const user = useAppSelector((x) => x.user)
+    const navigate = useNavigate()
 
     return (
         <Grid
@@ -30,7 +36,22 @@ const SimpleNavbar: React.FunctionComponent<ISimpleNavbar> = (
                 <NavigationButtons />
             </Grid>
             <Grid item display='grid'>
-                <StartAndLoginButtons />
+                {!user?.user ? (
+                    user.isLoading ? (
+                        <></>
+                    ) : (
+                        <StartAndLoginButtons />
+                    )
+                ) : (
+                    <IconTextButton
+                        style={{
+                            color: '#FFFFFF',
+                        }}
+                        onClick={() => navigate('/userProfile')}
+                        text='My account'
+                        Icon={<IconAccount fill={'#FFFFFF'} />}
+                    />
+                )}
             </Grid>
         </Grid>
     )

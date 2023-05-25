@@ -5,8 +5,42 @@
   white-space: nowrap;
   cursor: pointer;
   width: fit-content;
-  background: linear-gradient(#1766B9, #D001C1);
+  background-image: linear-gradient(to bottom, #1766B9, #D001C1, #1766B9);
   padding: 5px 20px 5px 20px;
   border: none;
   border-radius: 3px;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  background-size: 100% 200%;
+  animation-name: none;
+  opacity: 1;
+}
+
+.gradient-background-button:hover {
+  background-position: 0 100%;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.gradient-background-button:focus {
+  animation-name: background-change-effect;
+  outline: none;
+  animation-duration: 500ms;
+}
+.gradient-background-button:active {
+  animation-name: none;
+}
+
+@keyframes background-change-effect {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }

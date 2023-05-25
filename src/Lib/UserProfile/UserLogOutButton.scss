@@ -1,0 +1,17 @@
+.user-log-out-button {
+  font-size: 19px;
+  color: #FFFFFF;
+  font-family: 'Roboto-Regular';
+  white-space: nowrap;
+  cursor: pointer;
+  background: #B91717;
+  border: 2px solid #B91717;
+  width: fit-content;
+  padding: 5px 20px 5px 20px;
+  border-radius: 3px;
+}
+
+.user-log-out-button:hover {
+  color: #FFFFFF;
+  opacity: 0.8;
+}
