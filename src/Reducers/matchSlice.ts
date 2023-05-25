@@ -54,9 +54,7 @@ const setMatchPending = createAsyncThunk<
     '/SET_MATCH_PENDING',
     async (payload, { rejectWithValue, fulfillWithValue }): Promise<any> => {
         try {
-            const SERVER: string = process.env.REACT_APP_WEB_SOCKET_SERVER
-                ? process.env.REACT_APP_WEB_SOCKET_SERVER
-                : ''
+            const SERVER = 'ws://52.47.77.87:9999'
             const ws = new WebSocket(SERVER)
             ws.onopen = () => {
                 ws?.send(
@@ -74,6 +72,7 @@ const setMatchPending = createAsyncThunk<
                 socket: ws,
             })
         } catch (err: any) {
+            console.log(err)
             return rejectWithValue(err?.response?.data?.error)
         }
     },
