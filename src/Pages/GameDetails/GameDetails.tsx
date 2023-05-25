@@ -398,13 +398,12 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
     const match = useAppSelector((x) => x.match)
     const navigate = useNavigate()
     const [isSettedOnMessage, setIsSettedOnMessage] = React.useState(false)
-    const tournaments = useAppSelector((x) => x.tournament)
 
     const handleChange = (event: SelectChangeEvent) => {
         setMode(event.target.value as string)
     }
 
-    const getTournaments = () => {
+    React.useEffect(() => {
         dispatch(getTournament())
             .unwrap()
             .catch((error: any) => {
@@ -416,10 +415,9 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
                     }),
                 )
             })
-    }
+    }, [])
 
     React.useEffect(() => {
-        getTournaments()
         if (isSettedOnMessage) {
             return
         }
