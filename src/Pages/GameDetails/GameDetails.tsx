@@ -540,6 +540,19 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
                                                     mode: mode,
                                                 }),
                                             )
+                                                .unwrap()
+                                                .then(() => {
+                                                    return
+                                                })
+                                                .catch((err) => {
+                                                    console.log(err)
+                                                    snackbarActions.openSnackbar(
+                                                        {
+                                                            type: 'error',
+                                                            message: err,
+                                                        },
+                                                    )
+                                                })
                                         } else {
                                             dispatch(
                                                 snackbarActions.openSnackbar({
