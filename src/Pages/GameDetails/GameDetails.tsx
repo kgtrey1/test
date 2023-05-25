@@ -544,14 +544,16 @@ const GameDetails: React.FC<IGameDetails> = (props): JSX.Element => {
                                                 })
                                                 .catch((err) => {
                                                     console.log(err)
-                                                    snackbarActions.openSnackbar(
-                                                        {
-                                                            type: 'error',
-                                                            message:
-                                                                err?.message
-                                                                    ? err.message
-                                                                    : err,
-                                                        },
+                                                    dispatch(
+                                                        snackbarActions.openSnackbar(
+                                                            {
+                                                                type: 'error',
+                                                                message:
+                                                                    err?.message
+                                                                        ? err.message
+                                                                        : err,
+                                                            },
+                                                        ),
                                                     )
                                                 })
                                         } else {
